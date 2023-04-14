@@ -91,10 +91,10 @@ command to run if program contains helper info
 
 Contributors names and contact info
 
-* Joshua Adelowo
-* Ahmed Afrah
-* Muslime Ersoy (Lili)
-* Rosalind Robert
+* [Joshua Adelowo](https://github.com/joshuaadel0w0)
+* [Ahmed Afrah](https://github.com/A1mxd)
+* [Muslime Ersoy (Lili)](https://github.com/lili-me)
+* [Rosalind Robert](https://github.com/RosalindRobert)
 
 ## Version History
 

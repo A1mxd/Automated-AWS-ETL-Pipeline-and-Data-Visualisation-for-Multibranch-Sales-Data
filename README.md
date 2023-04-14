@@ -2,7 +2,7 @@
 
 ## Elevator Pitch
 For the existing client who needs an updated system for tracking and analysis of orders and get new customers, the cool beans system is a tracking an analysis system for the client that allows them to better understand the performance of their business.
-Unlike their previous system, our product will collate data from multiple data from multiple shows and analyse data on new.
+Unlike their previous system, our product will collate data from multiple data from multiple shops and analyse data of new customers.
 
 ## The MoSCoW
 

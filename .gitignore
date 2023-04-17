@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# uncleaned_data
+*.chesterfield_25-08-2021_09-00-00.csv
+*chesterfield_25-08-2021_09-00-00.csv

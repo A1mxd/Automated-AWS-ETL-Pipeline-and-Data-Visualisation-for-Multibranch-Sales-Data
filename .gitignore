@@ -131,3 +131,5 @@ dmypy.json
 # uncleaned_data
 *.chesterfield_25-08-2021_09-00-00.csv
 *chesterfield_25-08-2021_09-00-00.csv
+
+data/

@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  db:
+    image: postgres
+    container_name: Postgres_container
+    restart: always
+    environment:
+      POSTGRES_USER: "${postgres_user}"
+      POSTGRES_PASSWORD: "${postgres_pass}"
+    ports:
+      - "5432:5432"
+    volumes:
+      - type: volume
+        source: my_db_files
+        target: /var/lib/postgresql
+  adminer:
+    image: adminer
+    container_name: adminer_container
+    restart: always
+    ports:
+      - 8080:8080
+volumes:
+  my_db_files:

@@ -43,8 +43,9 @@ def insert_into_item_table(connection, items_list):
         cursor = connection.cursor()
 
         # Looping each item in the item list
-        for item in items_list:    
-            if check_if_duplicate_entry(connection, 'items', item, 'item_name'):
+        for item in items_list:   
+            item_name = item['item_name'] 
+            if check_if_duplicate_entry(connection, 'items', item_name, 'item_name'):
                 continue    # checks if entries already there, if it finds, it ignores the duplicates 
             else:
                 insert_item_to_db = ''' INSERT INTO items(item_name, item_price)

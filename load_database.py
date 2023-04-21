@@ -1,4 +1,5 @@
 from create_database import setup_db_connection
+import re
 
 """ This module has functions to insert into: 
 items table, locations table, transaction-items table and transaction table. 
@@ -12,15 +13,23 @@ def insert_into_location_table(connection, unique_location_list):
 
         # depends if the column is a dictionary in a list
         for location_name in unique_location_list:
-            if check_if_duplicate_entry(connection, 'location', location_name, 'location_name'):
+            # items = ["locations", "location_name"]
+
+            # a1 = 'samp"le s"tring'
+            # a2 = re.sub('"','',a1)
+            # print(a2)   
+
+            # items = [re.sub(r'""', {locations}, item) for item in items]
+            # items = [re.sub(r'^column_name\b', '{column_name}', item) for item in items]
+
+            if check_if_duplicate_entry(connection, 'locations', location_name, 'location_name'):
                 continue    # checks if entries already there, if it finds, it ignores the duplicates 
             else:
                 insert_location_to_db = ''' INSERT INTO locations(location_name)
                 VALUES (%s);
                 '''  #it inserts non-duplicate entries
 
-                location_values = (location_name)
-                cursor.execute(insert_location_to_db, location_values)
+                cursor.execute(insert_location_to_db, location_name)
                 connection.commit()
 
         cursor.close()
@@ -44,6 +53,7 @@ def insert_into_item_table(connection, items_list):
 
                 # assuming the key names in a dictionary is item_name  and item_price
                 item_values = (item['item_name'], item['item_price'])
+                
                 cursor.execute(insert_item_to_db, item_values)
                 connection.commit()
 
@@ -53,14 +63,14 @@ def insert_into_item_table(connection, items_list):
         print(f'Failed to open connection: {e}')
 
 # checks the database table if there is a similar entry before inserting
-def check_if_duplicate_entry(connection, table, entry, column_name):
+def check_if_duplicate_entry(connection, table: str, entry: str, column_name: str):
     try:
         cursor = connection.cursor()
 
-        cursor.execute(f'SELECT * FROM {table} \
-                       WHERE {column_name} = {entry}\
-                       LIMIT (1)')
+        sql = "SELECT * FROM " + table + " WHERE " + column_name + " = " + f"'{entry}'" + " LIMIT (1)"
         
+        cursor.execute(sql)
+
         if cursor.fetchone():
             return True
         else:
@@ -71,6 +81,6 @@ def check_if_duplicate_entry(connection, table, entry, column_name):
     
 
 
-def insert_into_transaction_items_table(connection,):
+def insert_into_transaction_items_table(connection, transactions, items):
     pass
 

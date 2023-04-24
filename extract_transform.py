@@ -1,4 +1,5 @@
 import csv
+from datetime import datetime
 
 def read_csv_to_lists(file):
 
@@ -60,10 +61,26 @@ def get_unique_locations(transaction_list):
     return unique_locations
 
 
+def convert_all_dates(list_of_dicts, date_cols, 
+                      current_format='%d/%m/%Y %H:%M',
+                      expected_format='%Y-%m-%d %H:%M'):
+    # Uniformity
+    for dict in list_of_dicts:
+        for col in date_cols:
+            try:
+                str_to_date = datetime.strptime(dict[col], current_format)
+                date_to_str = datetime.strftime(str_to_date, expected_format)
+                dict[col] = date_to_str
+            except ValueError as e:
+                print(f"Error parsing value '{dict[col]}' in column '{col}': {e}")
+                dict[col] = None
+            
+    return list_of_dicts
 
 if __name__ == '__main__':
 
     transactions, baskets = read_csv_to_lists("data/chesterfield_25-08-2021_09-00-00.csv")
+    transactions = convert_all_dates(transactions, ['date_time'])
 
     for i, transaction in enumerate(transactions):
         if i < 5:

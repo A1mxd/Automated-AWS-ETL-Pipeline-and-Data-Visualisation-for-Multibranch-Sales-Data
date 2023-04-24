@@ -1,5 +1,3 @@
-from create_database import setup_db_connection
-import re
 
 """ This module has functions to insert into: 
 items table, locations table, transaction-items table and transaction table. 
@@ -13,15 +11,7 @@ def insert_into_location_table(connection, unique_location_list):
 
         # depends if the column is a dictionary in a list
         for location_name in unique_location_list:
-            # items = ["locations", "location_name"]
-
-            # a1 = 'samp"le s"tring'
-            # a2 = re.sub('"','',a1)
-            # print(a2)   
-
-            # items = [re.sub(r'""', {locations}, item) for item in items]
-            # items = [re.sub(r'^column_name\b', '{column_name}', item) for item in items]
-
+            
             if check_if_duplicate_entry(connection, 'locations', location_name, 'location_name'):
                 continue    # checks if entries already there, if it finds, it ignores the duplicates 
             else:
@@ -29,7 +19,7 @@ def insert_into_location_table(connection, unique_location_list):
                 VALUES (%s);
                 '''  #it inserts non-duplicate entries
 
-                cursor.execute(insert_location_to_db, location_name)
+                cursor.execute(insert_location_to_db, (location_name,))
                 connection.commit()
 
         cursor.close()
@@ -83,5 +73,55 @@ def check_if_duplicate_entry(connection, table: str, entry: str, column_name: st
 
 
 def insert_into_transaction_items_table(connection, transactions, items):
-    pass
+
+    try:
+        cursor = connection.cursor()
+
+        # Looping each entry in the transaction list
+        for transaction in transactions:
+
+            location_name = transaction['location']
+            sql_location = "SELECT location_id FROM locations WHERE location_name = " + f"'{location_name}'" + " LIMIT (1)"
+            cursor.execute(sql_location)
+            location_id = cursor.fetchone()[0]
+
+            payment_method = transaction['payment_method']
+            sql_payment = "SELECT payment_id FROM payment_types WHERE payment = " + f"'{payment_method}'" + " LIMIT (1)"
+            cursor.execute(sql_payment)
+            payment_id = cursor.fetchone()[0]
+
+            # has own check if duplicate since multiple values needed to verify match
+            sql = "SELECT * FROM transactions WHERE date_time = '" + transaction['date_time'] + "' AND location_id = '" + str(location_id) + "' LIMIT (1)"
+            cursor.execute(sql)
+            if cursor.fetchone():
+                continue
+            else:
+                insert_transaction_to_db = ''' INSERT INTO transactions(date_time, location_id, total_price, payment_id)
+                VALUES (%s, %s, %s, %s)
+                RETURNING transaction_id;
+                '''
+
+                transaction_data = (transaction['date_time'], location_id, transaction['total_price'], payment_id)
+                cursor.execute(insert_transaction_to_db, transaction_data)
+                transaction_id = cursor.fetchone()[0]
+
+                for item in items:
+                    if item['temp_transaction_id'] == transaction['temp_transaction_id']:
+                        item_name = item['item_name']
+                        sql_item = "SELECT item_id FROM items WHERE item_name = " + f"'{item_name}'" + " LIMIT (1)"
+                        cursor.execute(sql_item)
+                        item_id = cursor.fetchone()[0]
+
+                        insert_transaction_item_to_db = """INSERT INTO transaction_items(transaction_id, item_id)
+                        VALUES (%s, %s);"""
+
+                        transaction_item_data = (transaction_id, item_id)
+                        cursor.execute(insert_transaction_item_to_db, transaction_item_data)
+
+            connection.commit()
+
+        cursor.close()
+
+    except Exception as e:
+        print(f'Failed to open connection: {e}')
 

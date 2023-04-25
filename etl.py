@@ -7,7 +7,8 @@ from create_database import setup_db_connection
 and load_database module to load tables into the database.
 """
 
-transactions, baskets = et.read_csv_to_lists("data/chesterfield_25-08-2021_09-00-00.csv")
+transactions, baskets = et.read_all_csv_files()
+
 transactions = et.convert_all_dates(transactions, ['date_time'])
 
 unique_items = et.get_unique_items(baskets)

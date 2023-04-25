@@ -19,7 +19,8 @@ def insert_into_location_table(connection, unique_location_list):
                 VALUES (%s);
                 '''  #it inserts non-duplicate entries
 
-                cursor.execute(insert_location_to_db, (location_name,))
+                # we need to make tuple to be able to execute the cursor on postgres!
+                cursor.execute(insert_location_to_db, (location_name,)) 
                 connection.commit()
 
         cursor.close()

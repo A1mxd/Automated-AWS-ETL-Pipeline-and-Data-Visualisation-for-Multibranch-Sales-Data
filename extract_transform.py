@@ -1,14 +1,13 @@
 import os
 import csv
+from datetime import datetime
 
 """This module reads all CSV files and extracts the data from them.
 It removes sensitive data and get unique items and locations names.
 """
 
-# i copied 'relative path' of data folder
-# but check if it is working for everyone. 
-# if not make sure right click on data folder and 'copy path' and paste it instead
-csv_dir = 'cool-beans-final-project\data'
+# make sure right click on data folder and 'copy path' and paste it instead
+csv_dir = 'C:/Users/User/Desktop/cool_beans_final_project/cool-beans-final-project/data'
 
 def chunks(list_of_items, n):
     """ This function takes n amount of items and puts them in a list

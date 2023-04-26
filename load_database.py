@@ -71,10 +71,7 @@ def check_if_duplicate_entry(connection, table: str, entry: str, column_name: st
     except Exception as e:
         print(f'Failed to open connection: {e}')
     
-
-
-def insert_into_transaction_items_table(connection, transactions, items):
-
+def insert_into_transactions_table(connection, transactions, items):
     try:
         cursor = connection.cursor()
 
@@ -105,19 +102,34 @@ def insert_into_transaction_items_table(connection, transactions, items):
                 transaction_data = (transaction['date_time'], location_id, transaction['total_price'], payment_id)
                 cursor.execute(insert_transaction_to_db, transaction_data)
                 transaction_id = cursor.fetchone()[0]
+                insert_into_transaction_items_table(connection, transaction_id, transaction['temp_transaction_id'], items)
 
-                for item in items:
-                    if item['temp_transaction_id'] == transaction['temp_transaction_id']:
-                        item_name = item['item_name']
-                        sql_item = "SELECT item_id FROM items WHERE item_name = " + f"'{item_name}'" + " LIMIT (1)"
-                        cursor.execute(sql_item)
-                        item_id = cursor.fetchone()[0]
+            connection.commit()
 
-                        insert_transaction_item_to_db = """INSERT INTO transaction_items(transaction_id, item_id)
-                        VALUES (%s, %s);"""
+        cursor.close()
 
-                        transaction_item_data = (transaction_id, item_id)
-                        cursor.execute(insert_transaction_item_to_db, transaction_item_data)
+    except Exception as e:
+        print(f'Failed to open connection: {e}')
+
+# WIP - issue to be solved: getting different items unrelated to the transaction
+def insert_into_transaction_items_table(connection, transaction_id, temp_transaction, items):
+    try:
+        cursor = connection.cursor()
+
+        for item in items:
+            if item['temp_transaction_id'] == temp_transaction:
+                item_name = item['item_name']
+                sql_item = "SELECT item_id FROM items WHERE item_name = " + f"'{item_name}'" + " LIMIT (1)"
+
+                cursor.execute(sql_item)
+                item_id = cursor.fetchone()[0]
+
+                insert_transaction_item_to_db = """INSERT INTO transaction_items(transaction_id, item_id)
+                VALUES (%s, %s);"""
+
+                transaction_item_data = (transaction_id, item_id)
+
+                cursor.execute(insert_transaction_item_to_db, transaction_item_data)
 
             connection.commit()
 

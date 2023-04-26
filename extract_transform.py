@@ -7,7 +7,7 @@ It removes sensitive data and get unique items and locations names.
 """
 
 # make sure right click on data folder and 'copy path' and paste it instead
-csv_dir = 'C:/Users/User/Desktop/cool_beans_final_project/cool-beans-final-project/data'
+csv_dir = 'C:/Users/rosal/Documents/Data Engineering Bootcamp/group-project/cool-beans-final-project/data'
 
 def chunks(list_of_items, n):
     """ This function takes n amount of items and puts them in a list
@@ -23,13 +23,19 @@ chunked_file_list = chunks(folder, 100) # makes list of files list up until 100 
 def read_all_csv_files():
     """ This functions takes all csv files and reads them one by one.
     """
-    
+    all_transactions = []
+    all_baskets = []
     for chunk in chunked_file_list:
         for file in chunk:
             file = f'data/{file}' # adds 'data/' path in front of the file names
-            read_all_files = read_csv_to_lists(file) # calls read_csv_to_lists() function to read all files one by one
+            transactions, baskets = read_csv_to_lists(file) # calls read_csv_to_lists() function to read all files one by one
+            all_transactions += transactions
+            all_baskets += baskets
 
-    return read_all_files
+    return all_transactions, all_baskets
+
+
+
 
 def read_csv_to_lists(file):
 

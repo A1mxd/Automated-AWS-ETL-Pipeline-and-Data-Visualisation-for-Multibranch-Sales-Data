@@ -6,8 +6,8 @@ from datetime import datetime
 It removes sensitive data and get unique items and locations names.
 """
 
-# make sure right click on data folder and 'copy path' and paste it instead
-csv_dir = 'C:/Users/rosal/Documents/Data Engineering Bootcamp/group-project/cool-beans-final-project/data'
+# finds the data folder from the location of the python file in our repo
+csv_dir = './data'
 
 def chunks(list_of_items, n):
     """ This function takes n amount of items and puts them in a list

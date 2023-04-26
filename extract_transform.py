@@ -6,36 +6,24 @@ from datetime import datetime
 It removes sensitive data and get unique items and locations names.
 """
 
-# make sure right click on data folder and 'copy path' and paste it instead
-csv_dir = 'C:/Users/rosal/Documents/Data Engineering Bootcamp/group-project/cool-beans-final-project/data'
-
-def chunks(list_of_items, n):
-    """ This function takes n amount of items and puts them in a list
-    """
-
-    n = max(1, n)
-    return [list_of_items[i:i+n] for i in range(0, len(list_of_items), n)]
-
-folder = os.listdir(csv_dir) #makes list of files
-
-chunked_file_list = chunks(folder, 100) # makes list of files list up until 100 files
-
 def read_all_csv_files():
     """ This functions takes all csv files and reads them one by one.
     """
     all_transactions = []
     all_baskets = []
-    for chunk in chunked_file_list:
-        for file in chunk:
-            file = f'data/{file}' # adds 'data/' path in front of the file names
-            transactions, baskets = read_csv_to_lists(file) # calls read_csv_to_lists() function to read all files one by one
-            all_transactions += transactions
-            all_baskets += baskets
+
+    csv_dir = './data'
+
+    folder = os.listdir(csv_dir) #makes list of files
+
+    # for chunk in chunked_file_list:
+    for file in folder:
+        file = f'data/{file}' # adds 'data/' path in front of the file names
+        transactions, baskets = read_csv_to_lists(file) # calls read_csv_to_lists() function to read all files one by one
+        all_transactions += transactions
+        all_baskets += baskets
 
     return all_transactions, all_baskets
-
-
-
 
 def read_csv_to_lists(file):
 
@@ -79,7 +67,6 @@ def read_csv_to_lists(file):
     except:
         print(f"failed to open {file}")
 
-
 def get_unique_items(basket_item_list):
     item_list = [] # list of strings, name of item
     unique_items = [] # list of dictionaries, item data
@@ -95,7 +82,6 @@ def get_unique_locations(transaction_list):
         if dict['location'] not in unique_locations:
             unique_locations.append(dict['location']) # append location name to return at end
     return unique_locations
-
 
 def convert_all_dates(list_of_dicts, date_cols, 
                       current_format='%d/%m/%Y %H:%M',

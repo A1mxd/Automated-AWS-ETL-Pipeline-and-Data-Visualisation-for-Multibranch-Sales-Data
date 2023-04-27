@@ -2,7 +2,7 @@ from unittest.mock import patch
 from extract_transform import read_csv_to_list
 
 """
-This module tests test_read_csv_to_lists function in extract_transform.py module    
+This module tests read_csv_to_list function in extract_transform.py module    
 """
 
 @patch('builtins.open')

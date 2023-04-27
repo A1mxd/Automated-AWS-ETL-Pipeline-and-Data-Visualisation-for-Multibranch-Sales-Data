@@ -1,5 +1,5 @@
 from unittest.mock import patch
-from extract_transform import read_csv_to_lists
+from extract_transform import read_csv_to_list
 
 """
 This module tests test_read_csv_to_lists function in extract_transform.py module    
@@ -12,41 +12,20 @@ def test_read_csv_to_lists(mock_csv_reader, test_file):
         [
             '1', 'chesterfield', 'jack', 'coffee - 3.7', '3.7', 'card', '1234567890'
         ],
-        [
-            '2', 'leeds', 'sue', 'tea - 3.7', '3.7', 'cash', None
-        ],
     ]
     
     expected_transactions = [
-            {'temp_transaction_id': 0,
-             'date_time': '1',
+            {'date_time': '1',
              'location': 'chesterfield',
+             "customer_name": 'jack',
+             "basket": 'coffee - 3.7',
+             'total_price': '3.7',
              'payment_method': 'card',
-             'total_price': '3.7'},
-
-            {'temp_transaction_id': 1,
-             'date_time': '2',
-             'location': 'leeds',
-             'payment_method': 'cash',
-             'total_price': '3.7'},
+             "card_number": '1234567890'}
            ]
-    
-    expected_items = [
-            {'temp_basket_item_id': 0,
-             'item_name': 'coffee',
-             'item_price': '3.7',
-             'temp_transaction_id': 0},
-             
-            {'temp_basket_item_id': 1,
-             'item_name': 'tea',
-             'item_price': '3.7',
-             'temp_transaction_id': 1}
-            ]
-    
-
+        
     test_file = None
       
-    result_transaction, results_items = read_csv_to_lists(test_file)
+    result_transaction = read_csv_to_list(test_file)
     
     assert expected_transactions == result_transaction
-    assert expected_items == results_items

@@ -7,7 +7,12 @@ from create_database import setup_db_connection
 and load_database module to load tables into the database.
 """
 
-transactions, baskets = et.read_all_csv_files()
+transactions = et.read_all_csv_files()
+
+sensitive_data = ["customer_name", "card_number"]
+et.remove_sensitive_data(transactions, sensitive_data)
+
+baskets = et.create_item_list(transactions)
 
 transactions = et.convert_all_dates(transactions, ['date_time'])
 

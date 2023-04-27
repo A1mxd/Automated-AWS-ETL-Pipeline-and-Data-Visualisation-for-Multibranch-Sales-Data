@@ -89,7 +89,7 @@ def insert_into_transactions_table(connection, transactions, items):
             payment_id = cursor.fetchone()[0]
 
             # has own check if duplicate since multiple values needed to verify match
-            sql = "SELECT * FROM transactions WHERE date_time = '" + transaction['date_time'] + "' AND location_id = '" + str(location_id) + "' LIMIT (1)"
+            sql = "SELECT * FROM transactions WHERE date_time = '" + transaction['date_time'] + "' AND location_id = '" + str(location_id) + "' AND total_price = '" + transaction['total_price'] + "' LIMIT (1)"
             cursor.execute(sql)
             if cursor.fetchone():
                 continue
@@ -137,4 +137,32 @@ def insert_into_transaction_items_table(connection, transaction_id, temp_transac
 
     except Exception as e:
         print(f'Failed to open connection: {e}')
+
+
+if __name__ == '__main__':
+    import extract_transform as et
+    from create_database import setup_db_connection 
+
+    connection = setup_db_connection()
+
+    transactions = et.read_all_csv_files()
+
+    sensitive_data = ["customer_name", "card_number"]
+    et.remove_sensitive_data(transactions, sensitive_data)
+
+    items = et.create_item_list(transactions)
+
+    transactions = et.convert_all_dates(transactions, ['date_time'])
+
+    unique_items = et.get_unique_items(items)
+    unique_locations = et.get_unique_locations(transactions)
+
+    transaction_id = 0
+    for i, transaction in enumerate(transactions):
+        if i == 0:
+            print(transaction)
+            for item in items:
+                if item['temp_transaction_id'] == transaction['temp_transaction_id']:
+                    print(item)
+            insert_into_transaction_items_table(connection, transaction_id, transaction['temp_transaction_id'], items)
 

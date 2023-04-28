@@ -54,7 +54,8 @@ def read_csv_to_list(file):
 def remove_sensitive_data(transactions, sensitive_data):
     for transaction in transactions:
         for data in sensitive_data:
-            del transaction[data]
+            if data in transaction:
+                del transaction[data]
 
 
 def create_item_list(transactions):
@@ -80,7 +81,7 @@ def create_item_list(transactions):
 def convert_all_dates(list_of_dicts, date_cols, 
                       current_format='%d/%m/%Y %H:%M',
                       expected_format='%Y-%m-%d %H:%M'):
-    # Uniformity
+
     for dict in list_of_dicts:
         for col in date_cols:
             try:

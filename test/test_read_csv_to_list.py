@@ -1,5 +1,5 @@
 from unittest.mock import patch
-from extract_transform import read_csv_to_list
+from src.extract_transform import read_csv_to_list
 
 """
 This module tests read_csv_to_list function in extract_transform.py module    

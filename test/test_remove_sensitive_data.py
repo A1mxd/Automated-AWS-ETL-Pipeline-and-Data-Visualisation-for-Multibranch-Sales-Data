@@ -1,4 +1,4 @@
-from extract_transform import remove_sensitive_data
+from src.extract_transform import remove_sensitive_data
 
 """
 This module tests remove_sensitive_data function in extract_transform.py module    

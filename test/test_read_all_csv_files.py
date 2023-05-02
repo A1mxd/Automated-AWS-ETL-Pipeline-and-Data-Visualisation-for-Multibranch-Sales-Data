@@ -1,5 +1,5 @@
 from unittest.mock import patch
-from extract_transform import read_all_csv_files
+from src.extract_transform import read_all_csv_files
 
 """
 This module tests read_all_csv_files function in extract_transform.py module    

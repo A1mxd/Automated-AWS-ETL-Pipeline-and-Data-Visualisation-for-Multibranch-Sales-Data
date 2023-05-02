@@ -34,10 +34,11 @@ def insert_into_item_table(connection, items_list):
         cursor = connection.cursor()
 
         # Looping each item in the item list
-        for item in items_list:   
-            item_name = item['item_name'] 
-            if check_if_duplicate_entry(connection, 'items', item_name, 'item_name'):
-                continue    # checks if entries already there, if it finds, it ignores the duplicates 
+        for item in items_list:
+            sql = "SELECT * FROM items WHERE item_name = '" + item['item_name'] + "' AND item_price = '" + item['item_price'] + "' LIMIT (1)"
+            cursor.execute(sql)
+            if cursor.fetchone():
+                continue  # checks if entries already there, if it finds, it ignores the duplicates 
             else:
                 insert_item_to_db = ''' INSERT INTO items(item_name, item_price)
                 VALUES (%s, %s);

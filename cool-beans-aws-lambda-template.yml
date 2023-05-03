@@ -1,0 +1,47 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: >
+  Template to deploy a lambda which is triggered by an S3 event.
+
+Parameters:
+  DeploymentBucket:
+    Type: String
+    Description: S3 bucket where Cool-Beans-Final-Project deployment package is.
+    Default: cool-beans-s3-bucket-stack-1
+  DeploymentPackageKey:
+    Type: String
+    Description: Enter the name of the S3 key of your deployment package.
+    Default: cool-beans-csv-reader-lambda-function.zip
+  BucketName:
+    Type: String
+    Description: S3 bucket for Cool-Beans-Final-Project raw data.
+    Default: cool-beans-raw-data-reader
+
+Resources:
+
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Runtime: python3.9
+      Handler: index.handler
+      Role: arn:aws:iam::015206308301:role/lambda-execution-role 
+      Code:
+        S3Bucket: !Ref DeploymentBucket
+        S3Key: !Ref DeploymentPackageKey
+
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+      NotificationConfiguration:
+        LambdaConfigurations:
+          - Event: s3:ObjectCreated:*
+            Function: !GetAtt LambdaFunction.Arn
+
+  S3BucketPermission:
+    Type: AWS::Lambda::Permission
+    Properties: 
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref LambdaFunction
+      Principal: s3.amazonaws.com
+      SourceArn: !GetAtt S3Bucket.Arn

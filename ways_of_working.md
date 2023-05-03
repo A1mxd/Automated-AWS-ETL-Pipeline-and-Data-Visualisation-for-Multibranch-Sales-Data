@@ -2,10 +2,13 @@
 
 ### This document details the ways of working for Cool Beans Final Project. This document is ever evolving, please feel empowered to make changes where appropriate.
 
+----
 ## Technology Stack
 * The project consists of AWS.
 * Python 3.
 * Data is stored in PostgreSQL for it's ease of access (will be integrated with AWS Cloud).
+
+----
 
 ## Agile Principles
 * The team works in a Kanban working style, using Trello tickets.
@@ -21,12 +24,23 @@
 * We ask each other and instructors when we are stuck. We don't wait too long in ambiguity / uncertainty / unknown. We don't stay in the dark. 
 * We share information and joy of working as team. 
 
+----
+
 ## Issues
 
 To-be-decided
 
+----
+
 ## Epics
+ ```OUR SMART GOAL: In a week's time, have a concrete weekly plan. Assign roles and tasks effectively for each cool bean to be able to work as a team efficiently.```
+
 We are spliting the epic goals into smaller chunks using 'to-do weekly breakdown' tickets.
+
+
+![Web capture_3-5-2023_214716_trello com](https://user-images.githubusercontent.com/127961112/236046194-a48d6592-b8d3-48ff-a1cc-3a7cf5fb51fe.jpeg)
+
+----
 
 ## Definition of Done
 * Making sure we have completed a unit test for the function and handle any errors that can occur 
@@ -34,8 +48,12 @@ We are spliting the epic goals into smaller chunks using 'to-do weekly breakdown
 * Code carries out all intended functionality
 * Agree as a team that the task is done
 
+----
+
 ## Coding Standards
 TBD
+
+----
 
 ## Version Control Strategy
 ### Branch naming convention

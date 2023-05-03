@@ -25,6 +25,9 @@ def read_all_csv_files():
 
 
 def read_csv_to_list(file):
+    """ This functions takes a csv file, reads it, 
+    and makes a list of dictionaries for each transaction.
+    """
 
     transaction_list = []
 
@@ -52,6 +55,11 @@ def read_csv_to_list(file):
 
 
 def remove_sensitive_data(transactions, sensitive_data):
+    """ This functions takes transaction list and 
+    sensitive data(customer_name and card number columns),
+    and removes those columns from the each dictionary of transactions.
+    """
+
     for transaction in transactions:
         for data in sensitive_data:
             if data in transaction:
@@ -59,12 +67,20 @@ def remove_sensitive_data(transactions, sensitive_data):
 
 
 def create_item_list(transactions):
+    """ This functions takes cleaned transactions. 
+    It splits the multiple basket items, 
+    separates 'item_name' and 'item_price' from each item,
+    and creates a products list for each transaction.
+    """
+
     basket_item_list = []
     temp_transaction_id = 0
+
     for transaction in transactions:
         transaction["temp_transaction_id"] = temp_transaction_id
 
         items = transaction["basket"].split(",")
+
         for item in items:
             item = item.strip().rsplit(" - ", 1)
             basket_item_entry = {
@@ -76,7 +92,6 @@ def create_item_list(transactions):
         temp_transaction_id += 1
 
     return basket_item_list
-
 
 def convert_all_dates(list_of_dicts, date_cols, 
                       current_format='%d/%m/%Y %H:%M',

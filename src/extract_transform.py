@@ -6,24 +6,6 @@ from datetime import datetime
 It removes sensitive data and get unique items and locations names.
 """
 
-def read_all_csv_files():
-    """ This functions takes all csv files and reads them one by one.
-    """
-    all_transactions = []
-
-    csv_dir = './data'
-
-    folder = os.listdir(csv_dir) #makes list of files
-
-    # for chunk in chunked_file_list:
-    for file in folder:
-        file = f'data/{file}' # adds 'data/' path in front of the file names
-        transactions = read_csv_to_list(file) # calls read_csv_to_lists() function to read all files one by one
-        all_transactions += transactions
-
-    return all_transactions
-
-
 def read_csv_to_list(file):
     """ This functions takes a csv file, reads it, 
     and makes a list of dictionaries for each transaction.
@@ -47,7 +29,7 @@ def read_csv_to_list(file):
                     "card_number": line[6]
                     }
                 transaction_list.append(transaction_entry)
-                
+
         return transaction_list
     
     except:
@@ -129,8 +111,8 @@ def get_unique_locations(transaction_list):
 
 if __name__ == '__main__':
 
-    #transactions = read_csv_to_list("data/chesterfield_25-08-2021_09-00-00.csv")
-    transactions = read_all_csv_files()
+    transactions = read_csv_to_list("data/chesterfield_25-08-2021_09-00-00.csv")
+    # transactions = read_csv_to_list(f)
 
     sensitive_data = ["customer_name", "card_number"]
     remove_sensitive_data(transactions, sensitive_data)

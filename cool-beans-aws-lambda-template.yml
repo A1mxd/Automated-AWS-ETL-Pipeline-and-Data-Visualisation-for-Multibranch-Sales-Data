@@ -1,7 +1,7 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
 Description: >
-  Template to deploy a lambda which is triggered by an S3 event.
+  Cool-Beans-Final_Project template to deploy a lambda which is triggered by an S3 event.
 
 Parameters:
   DeploymentBucket:
@@ -10,9 +10,9 @@ Parameters:
     Default: cool-beans-s3-bucket-stack-1
   DeploymentPackageKey:
     Type: String
-    Description: Enter the name of the S3 key of your deployment package.
+    Description: S3 key of Cool-Beans-Final-Project deployment package is the zip file of CSV-reader-lambda-function.
     Default: cool-beans-csv-reader-lambda-function.zip
-  BucketName:
+  BucketNameRawData:
     Type: String
     Description: S3 bucket for Cool-Beans-Final-Project raw data.
     Default: cool-beans-raw-data-reader
@@ -22,17 +22,26 @@ Resources:
   LambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
-      Runtime: python3.9
-      Handler: index.handler
-      Role: arn:aws:iam::015206308301:role/lambda-execution-role 
+      FunctionName: cool-bean-csv-reader-function
+      Runtime: python3.10
+      Handler: src.lambda_function.lambda_handler
+      Role: arn:aws:iam::015206308301:role/lambda-execution-role
+      Timeout: 300 
       Code:
         S3Bucket: !Ref DeploymentBucket
         S3Key: !Ref DeploymentPackageKey
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0e6c507aa8ae2a367
+        SubnetIds:
+          - subnet-01e8ba9e7640e0f56
 
   S3Bucket:
     Type: AWS::S3::Bucket
+    DependsOn:
+      - S3BucketPermission
     Properties:
-      BucketName: !Ref BucketName
+      BucketName: !Ref BucketNameRawData
       NotificationConfiguration:
         LambdaConfigurations:
           - Event: s3:ObjectCreated:*
@@ -44,4 +53,4 @@ Resources:
       Action: lambda:InvokeFunction
       FunctionName: !Ref LambdaFunction
       Principal: s3.amazonaws.com
-      SourceArn: !GetAtt S3Bucket.Arn
+      SourceArn: !Sub "arn:aws:s3:::${BucketNameRawData}"

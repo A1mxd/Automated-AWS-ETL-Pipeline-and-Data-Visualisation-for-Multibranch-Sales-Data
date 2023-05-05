@@ -21,13 +21,22 @@ def test_read_all_csv_files(mock_csv_reader):
              'total_price': '3.7',
              'payment_method': 'card',
              "card_number": '1234567890'},
-             {'basket': 'coffee - 3.7',
-             'card_number': '1234567890',
-             'customer_name': 'jack',
-             'date_time': '1',
+
+             {'date_time': '1',
              'location': 'chesterfield',
+             "customer_name": 'jack',
+             "basket": 'coffee - 3.7',
+             'total_price': '3.7',
              'payment_method': 'card',
-             'total_price': '3.7'}
+             "card_number": '1234567890'},
+             
+             {'date_time': '1',
+             'location': 'chesterfield',
+             "customer_name": 'jack',
+             "basket": 'coffee - 3.7',
+             'total_price': '3.7',
+             'payment_method': 'card',
+             "card_number": '1234567890'}
            ]
               
     result_transaction = read_all_csv_files()

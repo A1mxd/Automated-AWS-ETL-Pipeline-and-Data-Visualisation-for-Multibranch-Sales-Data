@@ -90,7 +90,8 @@ import sys
 
 We use following commands;
 
-* to run a module from main dir (`cool-beans-final-project directory`) : `py -m src.create_database`
+* to run a module from main dir (`cool-beans-final-project directory`): `py -m src.create_database`
+* to run a module from sub dir (`etl.p`): `py etl.py`
 
 FOR PostgreSQL and Docker container:
 * to install psycopg2: `py -m pip install psycopg2` 

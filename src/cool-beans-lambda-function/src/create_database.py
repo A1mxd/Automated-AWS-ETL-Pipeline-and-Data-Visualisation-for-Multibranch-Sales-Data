@@ -45,7 +45,7 @@ def create_items_table(connection):
         cursor = connection.cursor()
 
         create_item_table = """CREATE TABLE IF NOT EXISTS items(
-            item_id SERIAL PRIMARY KEY,
+            item_id INT identity(1, 1) PRIMARY KEY,
             item_name VARCHAR(200),
             item_price DECIMAL(19,2));
         """
@@ -63,7 +63,7 @@ def create_payment_types_table(connection):
         cursor = connection.cursor()
 
         cursor.execute("CREATE TABLE IF NOT EXISTS payment_types (\
-            payment_id SERIAL PRIMARY KEY,\
+            payment_id INT identity(1, 1) PRIMARY KEY,\
             payment VARCHAR(5));")
         
         cursor.execute("INSERT INTO payment_types \
@@ -81,7 +81,7 @@ def create_locations_table(connection):
         cursor = connection.cursor()
 
         cursor.execute("CREATE TABLE IF NOT EXISTS locations (\
-            location_id SERIAL PRIMARY KEY,\
+            location_id INT identity(1, 1) PRIMARY KEY,\
             location_name VARCHAR(200));")
         
         connection.commit()
@@ -96,7 +96,7 @@ def create_transaction_table(connection):
         cursor = connection.cursor()
 
         create_transaction_table = """CREATE TABLE IF NOT EXISTS transactions (
-            transaction_id SERIAL PRIMARY KEY,
+            transaction_id INT identity(1, 1) PRIMARY KEY,
             date_time TIMESTAMP, 
             location_id INT,
             total_price DECIMAL(19,2), 

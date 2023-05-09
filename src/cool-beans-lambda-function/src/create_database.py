@@ -1,7 +1,7 @@
 import psycopg2
 import boto3
 import os
-from dotenv import load_dotenv
+import json
 
 """ This module creates a connection with PostgreSQL. 
 It has functions to create tables for: items, locations, 
@@ -11,18 +11,25 @@ ssm_client = boto3.client('ssm')
 parameter_details = ssm_client.get_parameter(Name='cool-beans-redshift-settings')
 redshift_details = json.loads(parameter_details['Parameter']['Value'])
 
+
+print('Starting set up connection redshift')
+ssm_client = boto3.client('ssm')
+parameter_details = ssm_client.get_parameter(Name='cool-beans-redshift-settings')
+redshift_details = json.loads(parameter_details['Parameter']['Value'])
+
 # Gets the login info to database
-load_dotenv()
-host_name = os.environ.get("postgres_host")
-user_name = os.environ.get("postgres_user")
-user_password = os.environ.get("postgres_pass")
-database_name = os.environ.get("postgres_db")
+rs_host = redshift_details['host']
+rs_port = redshift_details['port']
+rs_database_name = redshift_details['database']
+rs_user = redshift_details['user']
+rs_password = redshift_details['password']
+print('Completed retrieving the connection details')
 
 # Sets up the connections 
-def setup_db_connection(host=host_name, 
-                        user=user_name, 
-                        password=user_password,
-                        db=database_name):
+def setup_db_connection(host=rs_host, 
+                        user=rs_user, 
+                        password=rs_password,
+                        db=rs_database_name):
     connection = psycopg2.connect(
         host = host,
         database = db,

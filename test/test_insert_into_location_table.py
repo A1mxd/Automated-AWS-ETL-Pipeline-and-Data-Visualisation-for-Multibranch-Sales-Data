@@ -1,4 +1,3 @@
-import unittest
 from unittest.mock import patch, MagicMock
 from src.load_database import insert_into_location_table
 

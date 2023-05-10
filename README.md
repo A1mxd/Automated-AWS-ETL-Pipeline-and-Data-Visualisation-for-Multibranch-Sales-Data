@@ -90,7 +90,8 @@ import sys
 
 We use following commands;
 
-* to run a module from main dir (`cool-beans-final-project directory`) : `py -m src.create_database`
+* to run a module from main dir (`cool-beans-final-project directory`): `py -m src.create_database`
+* to run a module from sub dir (`etl.p`): `py etl.py`
 
 FOR PostgreSQL and Docker container:
 * to install psycopg2: `py -m pip install psycopg2` 
@@ -107,10 +108,10 @@ FOR AWS:
 * to login AWS: `aws sso login --profile ${profile_name}`
 
 FOR AWS Cloudformation:
-* to create a bucket:  `aws s3 mb s3://cool-beans-s3-stack --profile ${profile_name} --region eu-west-1  `   
-* to put a zip file into a bucket: `aws s3 cp lambda-function.zip s3://cool-beans-s3-stack --profile ${profile_name} --region eu-west-1 `
+* to create a bucket:  `aws s3 mb s3://cool-beans-s3-bucket-stack-1 --profile ${profile_name} --region eu-west-1  `   
+* to put a zip file into a bucket: `aws s3 cp cool-beans-csv-reader-lambda-function.zip s3://cool-beans-s3-bucket-stack-1 --profile ${profile_name} --region eu-west-1 `
 * to create a stack, we make a file called `run-stack.sh` with this command in it: `aws cloudformation deploy --stack-name cool-beans-final-project --template-file cool-beans-aws-lambda-template.yml --region eu-west-1 --capabilities CAPABILITY_IAM --profile ${profile_name}`
-then make it executable by running: `chmod a+x run-stack.sh` and finally we run the `run-stack.sh` file with `./run-stack.sh` command on bash terminal.
+then make it executable by running: `chmod a+x run-stack.sh` and finally we run the `run-stack.sh` file with `./run-stack.sh ${profile_name}` command on bash terminal from the main dir.
 
 FOR Grafana:
 * to set up a docket container for Grafana: `docker run -d -p 3000:3000 grafana/grafana`

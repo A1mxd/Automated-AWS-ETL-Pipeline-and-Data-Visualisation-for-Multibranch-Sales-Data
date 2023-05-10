@@ -7,7 +7,9 @@ from create_database import setup_db_connection
 and load_database module to load tables into the database.
 """
 
-transactions = et.read_all_csv_files()
+# Change back to using read_csv_to_list function
+# because we will use this version in lambda function
+transactions = et.read_csv_to_list("chesterfield_25-08-2021_09-00-00.csv")
 
 sensitive_data = ["customer_name", "card_number"]
 et.remove_sensitive_data(transactions, sensitive_data)

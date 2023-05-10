@@ -20,7 +20,7 @@ redshift_details = json.loads(parameter_details['Parameter']['Value'])
 # Gets the login info to database
 rs_host = redshift_details['host']
 rs_port = redshift_details['port']
-rs_database_name = redshift_details['database']
+rs_database_name = redshift_details['database-name']
 rs_user = redshift_details['user']
 rs_password = redshift_details['password']
 print('Completed retrieving the connection details')

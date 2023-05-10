@@ -2,7 +2,7 @@ import boto3
 import csv
 import os
 import logging
-# import src.create_database as cdb
+import src.create_database as cdb
 import src.extract_transform as et
 # import src.load_database as db
 
@@ -48,12 +48,12 @@ def lambda_handler(event, context):
         # print(f"delon9-cool-bean-csv-reader: invoked, event={event}")
         
         # CREATING DATABASE
-        # connection = cdb.setup_db_connection()
-        # cdb.create_items_table(connection)
-        # cdb.create_payment_types_table(connection)
-        # cdb.create_locations_table(connection)
-        # cdb.create_transaction_table(connection)
-        # cdb.create_transaction_items_table(connection)
+        connection = cdb.setup_db_connection()
+        cdb.create_items_table(connection)
+        cdb.create_payment_types_table(connection)
+        cdb.create_locations_table(connection)
+        cdb.create_transaction_table(connection)
+        cdb.create_transaction_items_table(connection)
         
         #EXTRACTING 
         transactions = extract_csv_from_bucket(bucket_name, file_name)
@@ -75,7 +75,7 @@ def lambda_handler(event, context):
         # db.insert_into_transactions_table(connection, transactions, baskets)
         return {
             'statusCode': 200,
-            'body': baskets
+            'body': connection
         }
     except Exception as e:
         print(f"Lambda Handler Error = {e}") 

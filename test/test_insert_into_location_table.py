@@ -1,4 +1,3 @@
-import unittest
 from unittest.mock import patch, MagicMock
 from src.load_database import insert_into_location_table
 
@@ -25,3 +24,4 @@ def test_skips_existing_location(mock_check_if_duplicate_entry):
     
     connection.cursor().execute.assert_not_called()
     connection.commit.assert_not_called()
+

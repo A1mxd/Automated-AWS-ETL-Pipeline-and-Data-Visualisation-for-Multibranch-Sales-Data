@@ -4,11 +4,11 @@ sys.path.append('../src')
 from src.extract_transform import create_item_list
 
 def test_create_itemlist():
-    # Test with empty input 
+    #test with empty input 
     transactions = []
     assert create_item_list(transactions) == []
 
-    # Test for single entry
+    #test for single entry
     transactions = [
         {"date": "01/01/2020 10:03",
          "location": "Leeds",
@@ -24,7 +24,7 @@ def test_create_itemlist():
     ]
     assert create_item_list(transactions) == expected
 
-    # Test for multiple entries
+    #test for multiple entries
     transactions = [
         {"date": "01/01/2020 09:22",
          "location": "Leeds",

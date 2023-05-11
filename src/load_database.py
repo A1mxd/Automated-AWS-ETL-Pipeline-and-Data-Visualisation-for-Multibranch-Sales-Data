@@ -35,14 +35,14 @@ def insert_into_item_table(connection, items_list):
 
         # Looping each item in the item list
         for item in items_list:
-            sql = "SELECT * FROM items WHERE item_name = '" + item['item_name'] + "' AND item_price = '" + item['item_price'] + "' LIMIT (1)"
+            sql = "SELECT * FROM items WHERE item_name = '" + item['item_name'] + "' AND item_price = '" + str(item['item_price']) + "' LIMIT (1);"
             cursor.execute(sql)
             if cursor.fetchone():
                 continue  # checks if entries already there, if it finds, it ignores the duplicates 
             else:
                 insert_item_to_db = ''' INSERT INTO items(item_name, item_price)
                 VALUES (%s, %s);
-                ''' #it inserts non-duplicate entries 
+                ''' #it inserts non-duplicate entries
 
                 # assuming the key names in a dictionary is item_name  and item_price
                 item_values = (item['item_name'], item['item_price'])
@@ -146,7 +146,7 @@ if __name__ == '__main__':
 
     connection = setup_db_connection()
 
-    transactions = et.read_all_csv_files()
+    transactions = et.read_csv_to_list("data/chesterfield_25-08-2021_09-00-00.csv")
 
     sensitive_data = ["customer_name", "card_number"]
     et.remove_sensitive_data(transactions, sensitive_data)
@@ -158,12 +158,15 @@ if __name__ == '__main__':
     unique_items = et.get_unique_items(items)
     unique_locations = et.get_unique_locations(transactions)
 
-    transaction_id = 0
-    for i, transaction in enumerate(transactions):
-        if i == 0:
-            print(transaction)
-            for item in items:
-                if item['temp_transaction_id'] == transaction['temp_transaction_id']:
-                    print(item)
-            insert_into_transaction_items_table(connection, transaction_id, transaction['temp_transaction_id'], items)
+    # insert_into_item_table(connection, unique_items)
+    # insert_into_location_table(connection, unique_locations)
+
+    # transaction_id = 0
+    # for i, transaction in enumerate(transactions):
+    #     if i == 0:
+    #         print(transaction)
+    #         for item in items:
+    #             if item['temp_transaction_id'] == transaction['temp_transaction_id']:
+    #                 print(item)
+    #         insert_into_transaction_items_table(connection, transaction_id, transaction['temp_transaction_id'], items)
 

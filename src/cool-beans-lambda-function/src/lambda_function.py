@@ -5,9 +5,10 @@ import logging
 import src.create_database as cdb
 import src.extract_transform as et
 # import src.load_database as db
+import json
 
-s3 = boto3.client('s3')
-def extract_csv_from_bucket(bucket_name, file_name):
+
+def extract_csv_from_bucket(bucket_name, file_name, s3):
     
     transaction_list = []
 
@@ -40,15 +41,33 @@ def extract_csv_from_bucket(bucket_name, file_name):
 def lambda_handler(event, context):
     # TODO implement
     try:
+        s3 = boto3.client('s3')
         # file name inputted in the s3 bucket
         file_name = event['Records'][0]['s3']['object']['key']
         
         bucket_name = event['Records'][0]['s3']['bucket']['name']
         print(f'Lambda Handler: bucket name = {bucket_name}, file = {file_name}') #CHECKS FOR CORRECT CSV FILE/BUCKET
         # print(f"delon9-cool-bean-csv-reader: invoked, event={event}")
-        
+        print('Starting set up connection redshift')
+        ssm_client = boto3.client('ssm')
+        parameter_details = ssm_client.get_parameter(Name='cool-beans-redshift-settings')
+        redshift_details = json.loads(parameter_details['Parameter']['Value'])
+
+        # Gets the login info to database
+        print(redshift_details)
+        rs_host = redshift_details['host']
+        rs_port = redshift_details['port']
+        rs_database_name = redshift_details['database-name']
+        rs_user = redshift_details['user']
+        rs_password = redshift_details['password']
+        print('Completed retrieving the connection details')
+
         # CREATING DATABASE
-        connection = cdb.setup_db_connection()
+        connection = cdb.setup_db_connection(host=rs_host, 
+                                        user=rs_user, 
+                                        password=rs_password,
+                                        db=rs_database_name,
+                                        port = rs_port)
         cdb.create_items_table(connection)
         cdb.create_payment_types_table(connection)
         cdb.create_locations_table(connection)
@@ -56,7 +75,7 @@ def lambda_handler(event, context):
         cdb.create_transaction_items_table(connection)
         
         #EXTRACTING 
-        transactions = extract_csv_from_bucket(bucket_name, file_name)
+        transactions = extract_csv_from_bucket(bucket_name, file_name, s3)
         
         # TRANSFORMING
         sensitive_data = ["customer_name", "card_number"]
@@ -75,11 +94,14 @@ def lambda_handler(event, context):
         # db.insert_into_transactions_table(connection, transactions, baskets)
         return {
             'statusCode': 200,
-            'body': connection
+            'body': unique_items
         }
     except Exception as e:
         print(f"Lambda Handler Error = {e}") 
 
     
+    
+    
+
     
     

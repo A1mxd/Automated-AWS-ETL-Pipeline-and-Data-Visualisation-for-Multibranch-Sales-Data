@@ -1,5 +1,3 @@
-import os
-import csv
 from datetime import datetime
 
 def remove_sensitive_data(transactions, sensitive_data):

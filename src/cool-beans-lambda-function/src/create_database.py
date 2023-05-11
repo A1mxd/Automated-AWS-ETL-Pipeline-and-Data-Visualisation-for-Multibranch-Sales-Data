@@ -1,47 +1,39 @@
 import psycopg2
-import boto3
-import os
-import json
+
+
 
 """ This module creates a connection with PostgreSQL. 
 It has functions to create tables for: items, locations, 
 payment_type, transaction-items and transaction. 
 """
-ssm_client = boto3.client('ssm')
-parameter_details = ssm_client.get_parameter(Name='cool-beans-redshift-settings')
-redshift_details = json.loads(parameter_details['Parameter']['Value'])
 
 
-print('Starting set up connection redshift')
-ssm_client = boto3.client('ssm')
-parameter_details = ssm_client.get_parameter(Name='cool-beans-redshift-settings')
-redshift_details = json.loads(parameter_details['Parameter']['Value'])
-
-# Gets the login info to database
-rs_host = redshift_details['host']
-rs_port = redshift_details['port']
-rs_database_name = redshift_details['database-name']
-rs_user = redshift_details['user']
-rs_password = redshift_details['password']
-print('Completed retrieving the connection details')
 
 # Sets up the connections 
-def setup_db_connection(host=rs_host, 
-                        user=rs_user, 
-                        password=rs_password,
-                        db=rs_database_name):
-    connection = psycopg2.connect(
-        host = host,
-        database = db,
-        user = user,
-        password = password
-    )
-
-    return connection
+def setup_db_connection(host, 
+                        user, 
+                        password,
+                        db,
+                        port):
+    try:
+        print('setup_db_connection started')
+        connection = psycopg2.connect(
+            host = host,
+            dbname = db,
+            user = user,
+            password = password,
+            port = port
+        )
+        print('setup_db_connection completed') 
+        
+        return connection
+    except Exception as e:
+        print(f'setup_db_connection error: {e}')
 
 # Creates the items tables
 def create_items_table(connection):
     try:
+        print('create_items_table started')
         cursor = connection.cursor()
 
         create_item_table = """CREATE TABLE IF NOT EXISTS items(
@@ -53,31 +45,36 @@ def create_items_table(connection):
         cursor.execute(create_item_table)
         connection.commit()
         cursor.close()
+        print('create_items_table completed')
 
     except Exception as e:
-        print(f'Failed to open connection: {e}')
+        print(f'create_items_table error: {e}')
 
 # Creates the payment type table
 def create_payment_types_table(connection):
     try:
+        print('create_payment_types_table started')
         cursor = connection.cursor()
 
         cursor.execute("CREATE TABLE IF NOT EXISTS payment_types (\
             payment_id INT identity(1, 1) PRIMARY KEY,\
             payment VARCHAR(5));")
-        
-        cursor.execute("INSERT INTO payment_types \
-                        VALUES (1, 'CARD'), (2, 'CASH') ON CONFLICT DO NOTHING;")
+            
+        cursor.execute("TRUNCATE TABLE payment_types;")
+        cursor.execute("INSERT INTO payment_types(payment) \
+                        VALUES ('CARD'), ('CASH');")
         
         connection.commit()
         cursor.close()
+        print('create_payment_types_table completed')
 
     except Exception as e:
-        print(f'Failed to open connection: {e}')
+        print(f'create_payment_types_table error: {e}')
 
 # Creates locations table
 def create_locations_table(connection):
     try:
+        print('create_locations_table start')
         cursor = connection.cursor()
 
         cursor.execute("CREATE TABLE IF NOT EXISTS locations (\
@@ -86,13 +83,15 @@ def create_locations_table(connection):
         
         connection.commit()
         cursor.close()
+        print('create_locations_table completed')
 
     except Exception as e:
-        print(f'Failed to open connection: {e}')
+        print(f'create_locations_table error: {e}')
 
 # Creates transaction table
 def create_transaction_table(connection):
     try:
+        print('create_transaction_table start')
         cursor = connection.cursor()
 
         create_transaction_table = """CREATE TABLE IF NOT EXISTS transactions (
@@ -108,13 +107,15 @@ def create_transaction_table(connection):
         cursor.execute(create_transaction_table)
         connection.commit()
         cursor.close()
+        print('create_transaction_table completed')
 
     except Exception as e:
-        print(f'Failed to open connection: {e}')
+        print(f'create_transaction_table error: {e}')
 
 # Creates transaction_items table
 def create_transaction_items_table(connection):
     try:
+        print('create_transaction_items_table started')
         cursor = connection.cursor()
         
         create_transaction_item_table = """CREATE TABLE IF NOT EXISTS transaction_items (
@@ -127,6 +128,7 @@ def create_transaction_items_table(connection):
         cursor.execute(create_transaction_item_table)
         connection.commit()
         cursor.close()
+        print('create_transaction_items_table completed')
 
     except Exception as e:
-        print(f'Failed to open connection: {e}')
+        print(f'create_transaction_items_table error: {e}')

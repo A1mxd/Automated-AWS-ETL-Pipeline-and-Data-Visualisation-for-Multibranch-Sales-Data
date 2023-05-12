@@ -96,13 +96,15 @@ def insert_into_transactions_table(connection, transactions, items):
                 continue
             else:
                 insert_transaction_to_db = ''' INSERT INTO transactions(date_time, location_id, total_price, payment_id)
-                VALUES (%s, %s, %s, %s)
-                RETURNING transaction_id;
+                VALUES (%s, %s, %s, %s);
                 '''
-
                 transaction_data = (transaction['date_time'], location_id, transaction['total_price'], payment_id)
                 cursor.execute(insert_transaction_to_db, transaction_data)
+
+                get_transaction_id = "SELECT transaction_id FROM transactions WHERE date_time = '" + transaction['date_time'] + "' AND location_id = '" + str(location_id) + "' AND total_price = '" + transaction['total_price'] + "' LIMIT (1)"
+                cursor.execute(get_transaction_id)
                 transaction_id = cursor.fetchone()[0]
+                
                 insert_into_transaction_items_table(connection, transaction_id, transaction['temp_transaction_id'], items)
 
             connection.commit()

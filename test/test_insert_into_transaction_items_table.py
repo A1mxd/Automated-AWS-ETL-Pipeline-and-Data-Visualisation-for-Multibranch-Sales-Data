@@ -1,5 +1,4 @@
-import unittest
-from unittest.mock import patch, MagicMock, call
+from unittest.mock import MagicMock, call
 from src.load_database import insert_into_transaction_items_table
 
 def test_insert_into_transaction_items_table():

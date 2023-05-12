@@ -117,6 +117,10 @@ FOR Grafana:
 * to set up a docket container for Grafana: `docker run -d -p 3000:3000 grafana/grafana`
 * to pull Grafana docker image: `docker pull grafana/grafana`
 
+FOR AWS EC2 Instance to connect Grafana:
+
+![AWS EC2 Instance to connect Grafana](https://github.com/generation-de-lon9/cool-beans-final-project/assets/127961112/18c2a03a-b079-4958-b078-2476338588b6)
+
 ----
 
 

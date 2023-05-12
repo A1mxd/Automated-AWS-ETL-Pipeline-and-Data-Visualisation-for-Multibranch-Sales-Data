@@ -7,15 +7,13 @@ def test_insert_into_transaction_items_table():
     connection = MagicMock()
     transaction_id = 83
 
-    transaction=[
-            {'date_time': '2011-01-01 09:00',
+    transaction={'date_time': '2011-01-01 09:00',
              'location': 'chesterfield',
              "basket": 'coffee - 3.7',
              'total_price': '3.7',
              'payment_method': 'card',
              'temp_transaction_id': 62
              }
-           ]
     
     items  =[{"item_name": "Large Filter coffee",
          "item_price": '1.80',
@@ -57,4 +55,5 @@ def test_insert_into_transaction_items_table():
         
     ])
 
-    connection.commit.assert_called(times=3)
+    connection.commit.assert_called_with()
+    assert connection.commit.call_count == 7

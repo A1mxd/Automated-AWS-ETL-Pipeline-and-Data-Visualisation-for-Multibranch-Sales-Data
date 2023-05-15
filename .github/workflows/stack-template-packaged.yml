@@ -1,11 +1,9 @@
 on:
   push:
     branches:
-      - etl
+      - main
     paths:
       - src/* 
-on: 
-  workflow_dispatch: {}
 
 permissions:
   id-token: write

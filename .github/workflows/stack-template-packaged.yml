@@ -4,6 +4,7 @@ on:
       - etl
     paths:
       - src/*
+on: push
 
 permissions:
   id-token: write

@@ -1,9 +1,10 @@
+on: workflow_dispatch
 on:
   push:
     branches:
       - etl
     paths:
-      - src/*
+      - src/* 
 
 permissions:
   id-token: write

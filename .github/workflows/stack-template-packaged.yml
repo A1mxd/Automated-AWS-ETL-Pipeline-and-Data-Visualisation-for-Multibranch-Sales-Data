@@ -3,7 +3,7 @@ on:
     branches:
       - etl
     paths:
-      - src/* 
+      - src/*
 
 permissions:
   id-token: write

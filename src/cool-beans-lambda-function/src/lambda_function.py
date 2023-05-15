@@ -4,7 +4,7 @@ import os
 import logging
 import src.create_database as cdb
 import src.extract_transform as et
-# import src.load_database as db
+import src.load_database as db
 import json
 
 
@@ -68,11 +68,11 @@ def lambda_handler(event, context):
                                         password=rs_password,
                                         db=rs_database_name,
                                         port = rs_port)
-        cdb.create_items_table(connection)
-        cdb.create_payment_types_table(connection)
-        cdb.create_locations_table(connection)
-        cdb.create_transaction_table(connection)
-        cdb.create_transaction_items_table(connection)
+        # cdb.create_items_table(connection)
+        # cdb.create_payment_types_table(connection)
+        # cdb.create_locations_table(connection)
+        # cdb.create_transaction_table(connection)
+        # cdb.create_transaction_items_table(connection)
         
         #EXTRACTING 
         transactions = extract_csv_from_bucket(bucket_name, file_name, s3)
@@ -86,12 +86,13 @@ def lambda_handler(event, context):
         transactions = et.convert_all_dates(transactions, ['date_time'])
 
         unique_items = et.get_unique_items(baskets)
-        
+        unique_locations = et.get_unique_locations(transactions)
+
         #LOADING DATABASE
-        # unique_locations = et.get_unique_locations(transactions)
-        # db.insert_into_location_table(connection, unique_locations)
-        # db.insert_into_item_table(connection, unique_items)
-        # db.insert_into_transactions_table(connection, transactions, baskets)
+        db.insert_into_location_table(connection, unique_locations)
+        db.insert_into_item_table(connection, unique_items)
+        db.insert_into_transactions_table(connection, transactions, baskets)
+        
         return {
             'statusCode': 200,
             'body': unique_items

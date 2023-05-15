@@ -27,7 +27,7 @@ Resources:
       Handler: sub_src.lambda_function.lambda_handler
       Role: arn:aws:iam::015206308301:role/lambda-execution-role
       Timeout: 300 
-      Code: ../src/cool-beans-lambda-function
+      Code: ./src/cool-beans-lambda-function
       VpcConfig:
         SecurityGroupIds:
           - !Ref SecurityGroupId

@@ -4,7 +4,9 @@ on:
       - etl
     paths:
       - src/*
-on: push
+on: 
+  workflow_dispatch:
+    description: 'Running workflow automatically'
 
 permissions:
   id-token: write

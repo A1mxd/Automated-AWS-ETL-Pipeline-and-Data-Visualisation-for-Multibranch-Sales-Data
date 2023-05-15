@@ -54,7 +54,6 @@ def lambda_handler(event, context):
         redshift_details = json.loads(parameter_details['Parameter']['Value'])
 
         # Gets the login info to database
-        print(redshift_details)
         rs_host = redshift_details['host']
         rs_port = redshift_details['port']
         rs_database_name = redshift_details['database-name']

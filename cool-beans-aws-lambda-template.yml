@@ -24,10 +24,10 @@ Resources:
     Properties:
       FunctionName: cool-beans-csv-reader-function
       Runtime: python3.10
-      Handler: src.lambda_function.lambda_handler
+      Handler: sub_src.lambda_function.lambda_handler
       Role: arn:aws:iam::015206308301:role/lambda-execution-role
       Timeout: 300 
-      Code: ../src
+      Code: ./sub_src
       VpcConfig:
         SecurityGroupIds:
           - !Ref SecurityGroupId

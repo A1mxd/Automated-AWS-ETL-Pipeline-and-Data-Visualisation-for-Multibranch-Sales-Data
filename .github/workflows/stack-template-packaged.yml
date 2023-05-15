@@ -4,7 +4,6 @@ on:
       - etl
     paths:
       - src/*
-# on: workflow_dispatch
 
 permissions:
   id-token: write

@@ -1,15 +1,52 @@
+import os
+import csv
 from datetime import datetime
+
+"""This module reads all CSV files and extracts the data from them.
+It removes sensitive data and get unique items and locations names.
+"""
+
+def read_csv_to_list(file):
+    """ This functions takes a csv file, reads it, 
+    and makes a list of dictionaries for each transaction.
+    """
+
+    transaction_list = []
+
+    try:
+        with open(file, "r") as f:
+            reader = csv.reader(f)
+
+            for line in reader:
+
+                transaction_entry = {
+                    "date_time": line[0],
+                    "location" : line[1],
+                    "customer_name": line[2],
+                    "basket": line[3],
+                    "total_price" : line[4],
+                    "payment_method" : line[5],
+                    "card_number": line[6]
+                    }
+                transaction_list.append(transaction_entry)
+
+        return transaction_list
+    
+    except:
+        print(f"failed to open {file}")
+
 
 def remove_sensitive_data(transactions, sensitive_data):
     """ This functions takes transaction list and 
     sensitive data(customer_name and card number columns),
     and removes those columns from the each dictionary of transactions.
     """
+
     for transaction in transactions:
         for data in sensitive_data:
             if data in transaction:
                 del transaction[data]
-    print(f'Removed sensitive data: Rows = {len(transactions)}') 
+
 
 def create_item_list(transactions):
     """ This functions takes cleaned transactions. 
@@ -70,3 +107,34 @@ def get_unique_locations(transaction_list):
         if dict['location'] not in unique_locations:
             unique_locations.append(dict['location']) # append location name to return at end
     return unique_locations
+
+
+if __name__ == '__main__':
+
+    transactions = read_csv_to_list("data/chesterfield_25-08-2021_09-00-00.csv")
+    # transactions = read_csv_to_list(f)
+
+    sensitive_data = ["customer_name", "card_number"]
+    remove_sensitive_data(transactions, sensitive_data)
+
+    items = create_item_list(transactions)
+
+    transactions = convert_all_dates(transactions, ['date_time'])
+
+    print(len(transactions), len(items))
+
+    for i, transaction in enumerate(transactions):
+        if i < 5:
+            print(transaction)
+
+    for i, item in enumerate(items):
+        if i < 5:
+            print(item)
+
+    unique_items = get_unique_items(items)
+    for entry in unique_items:
+        print(entry)
+
+    unique_locations = get_unique_locations(transactions)
+    for entry in unique_locations:
+        print(entry)

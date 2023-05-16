@@ -19,7 +19,7 @@ Parameters:
 
 Resources:
 
-  LambdaFunction:
+  LambdaCsvReaderFunction:
     Type: AWS::Lambda::Function
     Properties:
       FunctionName: cool-beans-csv-reader-function
@@ -34,7 +34,7 @@ Resources:
         SubnetIds:
           - !Ref VpcSubnetId
 
-  LambdaFunction:
+  LambdaCreateDatabaseFunction:
     Type: AWS::Lambda::Function
     Properties:
       FunctionName: cool-beans-create-database-function
@@ -58,12 +58,12 @@ Resources:
       NotificationConfiguration:
         LambdaConfigurations:
           - Event: s3:ObjectCreated:*
-            Function: !GetAtt LambdaFunction.Arn
+            Function: !GetAtt LambdaCsvReaderFunction.Arn
 
   S3BucketPermission:
     Type: AWS::Lambda::Permission
     Properties: 
       Action: lambda:InvokeFunction
-      FunctionName: !Ref LambdaFunction
+      FunctionName: !Ref LambdaCsvReaderFunction
       Principal: s3.amazonaws.com
       SourceArn: !Sub "arn:aws:s3:::${BucketNameRawData}"

@@ -1,4 +1,6 @@
 import psycopg2
+import boto3
+import json
 
 """ This module creates a connection with PostgreSQL. 
 It has functions to create tables for: items, locations, 
@@ -55,8 +57,9 @@ def create_payment_types_table(connection):
         cursor.execute("CREATE TABLE IF NOT EXISTS payment_types (\
             payment_id INT identity(1, 1) PRIMARY KEY,\
             payment VARCHAR(5));")
-            
+        
         cursor.execute("TRUNCATE TABLE payment_types;")
+        
         cursor.execute("INSERT INTO payment_types(payment) \
                         VALUES ('CARD'), ('CASH');")
         
@@ -128,3 +131,34 @@ def create_transaction_items_table(connection):
 
     except Exception as e:
         print(f'create_transaction_items_table error: {e}')
+
+def lambda_handler(event, context):
+    # TODO implement
+    try:
+        print('Starting set up connection redshift')
+        ssm_client = boto3.client('ssm')
+        parameter_details = ssm_client.get_parameter(Name='cool-beans-redshift-settings')
+        redshift_details = json.loads(parameter_details['Parameter']['Value'])
+
+        # Gets the login info to database
+        rs_host = redshift_details['host']
+        rs_port = redshift_details['port']
+        rs_database_name = redshift_details['database-name']
+        rs_user = redshift_details['user']
+        rs_password = redshift_details['password']
+        print('Completed retrieving the connection details')
+
+        # CREATING DATABASE
+        connection = setup_db_connection(host=rs_host, 
+                                        user=rs_user, 
+                                        password=rs_password,
+                                        db=rs_database_name,
+                                        port = rs_port)
+        create_items_table(connection)
+        create_payment_types_table(connection)
+        create_locations_table(connection)
+        create_transaction_table(connection)
+        create_transaction_items_table(connection)
+        
+    except Exception as e:
+        print(f"Lambda Handler Error = {e}") 

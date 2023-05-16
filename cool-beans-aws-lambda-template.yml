@@ -19,12 +19,27 @@ Parameters:
 
 Resources:
 
-  LambdaFunction:
+  LambdaCsvReaderFunction:
     Type: AWS::Lambda::Function
     Properties:
       FunctionName: cool-beans-csv-reader-function
       Runtime: python3.10
       Handler: lambda_function.lambda_handler
+      Role: arn:aws:iam::015206308301:role/lambda-execution-role
+      Timeout: 300 
+      Code: ./src
+      VpcConfig:
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+        SubnetIds:
+          - !Ref VpcSubnetId
+
+  LambdaCreateDatabaseFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: cool-beans-create-database-function
+      Runtime: python3.10
+      Handler: create_database.lambda_handler
       Role: arn:aws:iam::015206308301:role/lambda-execution-role
       Timeout: 300 
       Code: ./src
@@ -43,12 +58,12 @@ Resources:
       NotificationConfiguration:
         LambdaConfigurations:
           - Event: s3:ObjectCreated:*
-            Function: !GetAtt LambdaFunction.Arn
+            Function: !GetAtt LambdaCsvReaderFunction.Arn
 
   S3BucketPermission:
     Type: AWS::Lambda::Permission
     Properties: 
       Action: lambda:InvokeFunction
-      FunctionName: !Ref LambdaFunction
+      FunctionName: !Ref LambdaCsvReaderFunction
       Principal: s3.amazonaws.com
       SourceArn: !Sub "arn:aws:s3:::${BucketNameRawData}"

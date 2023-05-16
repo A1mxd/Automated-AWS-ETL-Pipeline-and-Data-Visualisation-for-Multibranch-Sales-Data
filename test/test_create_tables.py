@@ -14,7 +14,7 @@ def test_create_locations_table(mock_print):
     connection.commit.assert_called_once()
 
     assert mock_print.call_count == 2
-    assert mock_print.call_args_list == [call('create_locations_table start'), 
+    assert mock_print.call_args_list == [call('create_locations_table started'), 
                                          call('create_locations_table completed')]
 
 @patch('builtins.print')    
@@ -35,8 +35,8 @@ def test_create_items_table(mock_print):
     assert mock_print.call_args_list == [call('create_items_table started'), 
                                          call('create_items_table completed')]
 
-
-def test_create_payment_types_table():
+@patch('builtins.print')
+def test_create_payment_types_table(mock_print):
     
     connection = MagicMock()
 
@@ -44,12 +44,17 @@ def test_create_payment_types_table():
 
     connection.cursor().execute.assert_has_calls([
         call("CREATE TABLE IF NOT EXISTS payment_types (\
-            payment_id SERIAL PRIMARY KEY,\
+            payment_id INT identity(1, 1) PRIMARY KEY,\
             payment VARCHAR(5));"),
-        call("INSERT INTO payment_types \
-                        VALUES (1, 'CARD'), (2, 'CASH') ON CONFLICT DO NOTHING;")
+        call("TRUNCATE TABLE payment_types;"),
+        call("INSERT INTO payment_types(payment) \
+                        VALUES ('CARD'), ('CASH');")
             ])
     connection.commit.assert_called_once()
+
+    assert mock_print.call_count == 2
+    assert mock_print.call_args_list == [call('create_payment_types_table started'), 
+                                         call('create_payment_types_table completed')]
 
 
 def test_create_transaction_table():

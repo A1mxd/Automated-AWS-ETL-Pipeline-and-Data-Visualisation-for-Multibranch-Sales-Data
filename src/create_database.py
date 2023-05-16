@@ -70,7 +70,7 @@ def create_payment_types_table(connection):
 # Creates locations table
 def create_locations_table(connection):
     try:
-        print('create_locations_table start')
+        print('create_locations_table started')
         cursor = connection.cursor()
 
         cursor.execute("CREATE TABLE IF NOT EXISTS locations (\

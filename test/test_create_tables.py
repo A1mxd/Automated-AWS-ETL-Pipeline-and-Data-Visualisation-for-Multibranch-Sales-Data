@@ -74,6 +74,10 @@ def test_create_transaction_table():
             """)
     connection.commit.assert_called_once()
 
+    assert mock_print.call_count == 2
+    assert mock_print.call_args_list == [call('create_transaction_table started'), 
+                                         call('create_payment_types_table completed')]
+
 
 def test_create_transaction_items_table():
     

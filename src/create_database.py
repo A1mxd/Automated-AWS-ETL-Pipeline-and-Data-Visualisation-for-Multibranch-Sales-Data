@@ -1,13 +1,9 @@
 import psycopg2
 
-
-
 """ This module creates a connection with PostgreSQL. 
 It has functions to create tables for: items, locations, 
 payment_type, transaction-items and transaction. 
 """
-
-
 
 # Sets up the connections 
 def setup_db_connection(host, 

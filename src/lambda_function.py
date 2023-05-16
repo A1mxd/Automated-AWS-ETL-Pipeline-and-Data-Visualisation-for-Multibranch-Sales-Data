@@ -67,11 +67,6 @@ def lambda_handler(event, context):
                                         password=rs_password,
                                         db=rs_database_name,
                                         port = rs_port)
-        # cdb.create_items_table(connection)
-        # cdb.create_payment_types_table(connection)
-        # cdb.create_locations_table(connection)
-        # cdb.create_transaction_table(connection)
-        # cdb.create_transaction_items_table(connection)
         
         #EXTRACTING 
         transactions = extract_csv_from_bucket(bucket_name, file_name, s3)

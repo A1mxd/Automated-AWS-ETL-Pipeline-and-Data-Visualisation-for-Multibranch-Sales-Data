@@ -7,8 +7,6 @@ It has functions to create tables for: items, locations,
 payment_type, transaction-items and transaction. 
 """
 
-
-
 # Sets up the connections 
 def setup_db_connection(host, 
                         user, 
@@ -75,7 +73,7 @@ def create_payment_types_table(connection):
 # Creates locations table
 def create_locations_table(connection):
     try:
-        print('create_locations_table start')
+        print('create_locations_table started')
         cursor = connection.cursor()
 
         cursor.execute("CREATE TABLE IF NOT EXISTS locations (\
@@ -92,7 +90,7 @@ def create_locations_table(connection):
 # Creates transaction table
 def create_transaction_table(connection):
     try:
-        print('create_transaction_table start')
+        print('create_transaction_table started')
         cursor = connection.cursor()
 
         create_transaction_table = """CREATE TABLE IF NOT EXISTS transactions (

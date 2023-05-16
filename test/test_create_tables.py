@@ -17,19 +17,23 @@ def test_create_locations_table(mock_print):
     assert mock_print.call_args_list == [call('create_locations_table start'), 
                                          call('create_locations_table completed')]
 
-    
-def test_create_items_table():
+@patch('builtins.print')    
+def test_create_items_table(mock_print):
     
     connection = MagicMock()
 
     create_items_table(connection)
 
     connection.cursor().execute.assert_called_with("""CREATE TABLE IF NOT EXISTS items(
-            item_id SERIAL PRIMARY KEY,
+            item_id INT identity(1, 1) PRIMARY KEY,
             item_name VARCHAR(200),
             item_price DECIMAL(19,2));
         """)
     connection.commit.assert_called_once()
+
+    assert mock_print.call_count == 2
+    assert mock_print.call_args_list == [call('create_items_table started'), 
+                                         call('create_items_table completed')]
 
 
 def test_create_payment_types_table():

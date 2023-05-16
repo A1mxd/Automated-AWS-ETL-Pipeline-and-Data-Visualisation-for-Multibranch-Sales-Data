@@ -19,10 +19,10 @@ Parameters:
 
 Resources:
 
-  LambdaCsvReaderFunction:
+  LambdaETLFunction:
     Type: AWS::Lambda::Function
     Properties:
-      FunctionName: cool-beans-csv-reader-function
+      FunctionName: cool-beans-ETL-function
       Runtime: python3.10
       Handler: lambda_function.lambda_handler
       Role: arn:aws:iam::015206308301:role/lambda-execution-role
@@ -58,12 +58,12 @@ Resources:
       NotificationConfiguration:
         LambdaConfigurations:
           - Event: s3:ObjectCreated:*
-            Function: !GetAtt LambdaCsvReaderFunction.Arn
+            Function: !GetAtt LambdaETLFunction.Arn
 
   S3BucketPermission:
     Type: AWS::Lambda::Permission
     Properties: 
       Action: lambda:InvokeFunction
-      FunctionName: !Ref LambdaCsvReaderFunction
+      FunctionName: !Ref LambdaETLFunction
       Principal: s3.amazonaws.com
       SourceArn: !Sub "arn:aws:s3:::${BucketNameRawData}"

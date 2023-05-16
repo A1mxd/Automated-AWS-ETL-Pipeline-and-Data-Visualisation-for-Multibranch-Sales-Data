@@ -1,6 +1,9 @@
 from src.create_database import create_locations_table, create_items_table, create_payment_types_table, create_transaction_table, create_transaction_items_table
 from unittest.mock import call, MagicMock, patch
 
+""" This module test the functions at create_database.py module in src folder.
+"""
+
 @patch('builtins.print')
 def test_create_locations_table(mock_print):
     

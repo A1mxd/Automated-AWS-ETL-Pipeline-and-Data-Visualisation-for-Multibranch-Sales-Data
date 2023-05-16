@@ -87,7 +87,7 @@ def create_locations_table(connection):
 # Creates transaction table
 def create_transaction_table(connection):
     try:
-        print('create_transaction_table start')
+        print('create_transaction_table started')
         cursor = connection.cursor()
 
         create_transaction_table = """CREATE TABLE IF NOT EXISTS transactions (

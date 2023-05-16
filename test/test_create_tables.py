@@ -56,15 +56,15 @@ def test_create_payment_types_table(mock_print):
     assert mock_print.call_args_list == [call('create_payment_types_table started'), 
                                          call('create_payment_types_table completed')]
 
-
-def test_create_transaction_table():
+@patch('builtins.print')
+def test_create_transaction_table(mock_print):
     
     connection = MagicMock()
 
     create_transaction_table(connection)
 
     connection.cursor().execute.assert_called_with("""CREATE TABLE IF NOT EXISTS transactions (
-            transaction_id SERIAL PRIMARY KEY,
+            transaction_id INT identity(1, 1) PRIMARY KEY,
             date_time TIMESTAMP, 
             location_id INT,
             total_price DECIMAL(19,2), 
@@ -76,10 +76,10 @@ def test_create_transaction_table():
 
     assert mock_print.call_count == 2
     assert mock_print.call_args_list == [call('create_transaction_table started'), 
-                                         call('create_payment_types_table completed')]
+                                         call('create_transaction_table completed')]
 
-
-def test_create_transaction_items_table():
+@patch('builtins.print')
+def test_create_transaction_items_table(mock_print):
     
     connection = MagicMock()
 
@@ -92,4 +92,8 @@ def test_create_transaction_items_table():
             FOREIGN KEY (item_id) REFERENCES items(item_id));
             """)
     connection.commit.assert_called_once()
+
+    assert mock_print.call_count == 2
+    assert mock_print.call_args_list == [call('create_transaction_items_table started'), 
+                                         call('create_transaction_items_table completed')]
         

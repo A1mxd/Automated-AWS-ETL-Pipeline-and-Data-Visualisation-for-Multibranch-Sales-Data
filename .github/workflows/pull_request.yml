@@ -10,7 +10,7 @@ permissions:
   contents: read 
 
 jobs:
-  deploy-lambda:
+  run-unittest:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code

@@ -79,8 +79,6 @@ Resources:
 
   S3Bucket:
     Type: AWS::S3::Bucket
-    DependsOn:
-      - S3BucketPermission
     Properties:
       BucketName: !Ref BucketNameRawData
       NotificationConfiguration:

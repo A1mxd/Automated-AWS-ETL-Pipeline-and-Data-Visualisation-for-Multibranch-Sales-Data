@@ -85,6 +85,7 @@ Resources:
         QueueConfigurations:
           - Event: s3:ObjectCreated:*
             Queue: !GetAtt S3ToTransformQueue.Arn
+    DependsOn: S3ToTransformQueuePolicy
 
   S3ToTransformFunctionEventSourceMapping:
     Type: AWS::Lambda::EventSourceMapping

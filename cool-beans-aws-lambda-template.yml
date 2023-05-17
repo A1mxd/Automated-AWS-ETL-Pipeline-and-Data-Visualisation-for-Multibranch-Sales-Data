@@ -19,6 +19,34 @@ Parameters:
 
 Resources:
 
+  S3ToTransformQueue:
+    Type: "AWS::SQS::Queue"
+    Properties:
+      QueueName: cool_beans_s3_transform_queue
+
+
+  S3ToTransformQueuePolicy:
+    Type: "AWS::SQS::QueuePolicy"
+    Properties:
+      PolicyDocument:
+        Version: "2012-10-17"
+        Id: S3ToTransformQueuePolicy
+        Statement:
+          - Sid: Allow-SendMessage-To-Queue-From-S3-Event-Notification
+            Effect: Allow
+            Principal: 
+              Service: "s3.amazonaws.com"
+            Action:
+              - "sqs:SendMessage"
+            Resource: !GetAtt S3ToTransformQueue.Arn
+            Condition:
+              ArnLike:
+                aws:SourceArn: !Join ["",['arn:aws:s3:::',!Ref BucketNameRawData]]
+              StringEquals:
+                aws:SourceAccount: !Ref AWS::AccountId
+      Queues:
+        - Ref: S3ToTransformQueue
+
   LambdaETLFunction:
     Type: AWS::Lambda::Function
     Properties:
@@ -27,7 +55,6 @@ Resources:
       Handler: lambda_function.lambda_handler
       Role: arn:aws:iam::015206308301:role/lambda-execution-role
       Timeout: 300 
-      ReservedConcurrentExecutions: 1
       Code: ./src
       VpcConfig:
         SecurityGroupIds:
@@ -57,14 +84,14 @@ Resources:
     Properties:
       BucketName: !Ref BucketNameRawData
       NotificationConfiguration:
-        LambdaConfigurations:
+        QueueConfigurations:
           - Event: s3:ObjectCreated:*
-            Function: !GetAtt LambdaETLFunction.Arn
+            Queue: !GetAtt S3ToTransformQueue.Arn
 
-  S3BucketPermission:
-    Type: AWS::Lambda::Permission
-    Properties: 
-      Action: lambda:InvokeFunction
-      FunctionName: !Ref LambdaETLFunction
-      Principal: s3.amazonaws.com
-      SourceArn: !Sub "arn:aws:s3:::${BucketNameRawData}"
+  S3ToTransformFunctionEventSourceMapping:
+    Type: AWS::Lambda::EventSourceMapping
+    Properties:
+      BatchSize: 10
+      Enabled: true
+      EventSourceArn: !GetAtt S3ToTransformQueue.Arn
+      FunctionName: !GetAtt LambdaETLFunction.Arn

@@ -39,15 +39,15 @@ def extract_csv_from_bucket(bucket_name, file_name, s3):
         
     
 def lambda_handler(event, context):
-    # TODO implement
     try:
         s3 = boto3.client('s3')
         # file name inputted in the s3 bucket
-        file_name = event['Records'][0]['s3']['object']['key']
+        print(f"cool-bean-etl-function: invoked, event={event}")
+        file_name = event['Records'][0]['body']['Records'][0]['s3']['object']['key']
         
-        bucket_name = event['Records'][0]['s3']['bucket']['name']
+        bucket_name = event['Records'][0]['body']['Records'][0]['s3']['bucket']['name']
         print(f'Lambda Handler: bucket name = {bucket_name}, file = {file_name}') #CHECKS FOR CORRECT CSV FILE/BUCKET
-        # print(f"delon9-cool-bean-csv-reader: invoked, event={event}")
+        
         print('Starting set up connection redshift')
         ssm_client = boto3.client('ssm')
         parameter_details = ssm_client.get_parameter(Name='cool-beans-redshift-settings')

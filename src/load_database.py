@@ -36,7 +36,7 @@ def insert_into_item_table(connection, items_list):
 
         # Looping each item in the item list
         for item in items_list:
-            sql = "SELECT * FROM items WHERE item_name = '" + item['item_name'] + "' AND item_price = '" + item['item_price'] + "' LIMIT (1)"
+            sql = "SELECT * FROM items WHERE item_name = '" + item['item_name'] + "' AND item_price = '" + item['item_price'] + "' LIMIT (1);"
             cursor.execute(sql)
             if cursor.fetchone():
                 continue  # checks if entries already there, if it finds, it ignores the duplicates 

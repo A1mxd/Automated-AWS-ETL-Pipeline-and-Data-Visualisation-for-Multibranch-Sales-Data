@@ -15,9 +15,9 @@ def extract_csv_from_bucket(bucket_name, file_name, s3):
     try:
         
         csv_file = s3.get_object(Bucket=bucket_name, Key=file_name)
-        print(f"Getting csv file: bucket name ={bucket_name}, key={file_name}")
+        print(f"Getting csv file: bucket name = {bucket_name}, key = {file_name}")
         transactions = csv_file['Body'].read().decode('utf-8').splitlines()
-        print(f"Read csv file: bucket name ={bucket_name}, key={file_name}")
+        print(f"Read csv file: bucket name = {bucket_name}, key = {file_name}")
         reader = csv.reader(transactions)
 
         for line in reader:
@@ -31,7 +31,7 @@ def extract_csv_from_bucket(bucket_name, file_name, s3):
                     "card_number": line[6]
                     }
                 transaction_list.append(transaction_entry)
-        print(f'Extracted csv file: Rows = {len(transaction_list)}, bucket name = {bucket_name} ')        
+        print(f'Extracted csv file: Rows = {len(transaction_list)}, bucket name = {bucket_name}')        
         return transaction_list
         
     except Exception as e:

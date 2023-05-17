@@ -2,9 +2,9 @@ import boto3
 import csv
 import os
 import logging
-# import create_database as cdb
-# import extract_transform as et
-# import load_database as db
+import create_database as cdb
+import extract_transform as et
+import load_database as db
 import json
 
 

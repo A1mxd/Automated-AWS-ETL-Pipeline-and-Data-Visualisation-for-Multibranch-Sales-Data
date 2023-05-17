@@ -23,6 +23,7 @@ Resources:
     Type: "AWS::SQS::Queue"
     Properties:
       QueueName: cool_beans_s3_transform_queue
+      VisibilityTimeout: 400
 
 
   S3ToTransformQueuePolicy:

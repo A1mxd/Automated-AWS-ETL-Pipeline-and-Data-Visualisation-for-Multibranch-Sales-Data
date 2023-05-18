@@ -41,6 +41,7 @@ def lambda_handler(event, context):
     print(f"cool-bean-etl-function: invoked, event={event}")
     try:
         s3 = boto3.client('s3')
+        sqs = boto3.client('sqs')
 
         for msg_id, msg in enumerate(event['Records']):
             print(f'lambda_handler: message_id = {msg_id}')
@@ -65,14 +66,28 @@ def lambda_handler(event, context):
 
             unique_items = et.get_unique_items(baskets)
             unique_locations = et.get_unique_locations(transactions)
+
+            # SENDING TO S3
+            s3.upload_file(bucket_name, file_name)
+            print(f"Uploading to S3 into bucket {bucket_name} with key {file_name}")
             
-        return {
-            'statusCode': 200,
+            # SENDING MESSAGE TO SQS
+            message ={
             'body_items': unique_items,
             'body_locations': unique_locations,
             'body_transactions': transactions,
             'body_baskets': baskets
         }
+            json_message = json.dumps(message)
+
+            queue_url = os.environ.get("https://sqs.eu-west-1.amazonaws.com/015206308301/cool_beans_transform_to_load_queue")
+
+            print(f"Sending SQS message {json_message} to queue {queue_url}")
+            sqs.send_message(
+                 QueueUrl = queue_url,
+                 MessageBody = json_message,
+                 MessageGroupId = '1') #Always same group ID to limit concurrency
+
     except Exception as e:
         print(f"Lambda Handler Error = {e}") 
 

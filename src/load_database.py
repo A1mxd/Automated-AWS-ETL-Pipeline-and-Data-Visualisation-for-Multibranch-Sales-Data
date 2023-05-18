@@ -1,3 +1,7 @@
+import boto3
+import create_database as cdb
+import json
+
 """ This module has functions to insert into: 
 items table, locations table, transaction-items table and transaction table. 
 This module has function to check if entries are duplicate.
@@ -117,7 +121,6 @@ def insert_into_transactions_table(connection, transactions, items):
     except Exception as e:
         print(f'insert_into_transactions_table error: {e}')
 
-# WIP - issue to be solved: getting different items unrelated to the transaction
 def insert_into_transaction_items_table(connection, transaction_id, temp_transaction, items):
     try:
         # print('insert_into_transaction_items_table started')
@@ -144,3 +147,45 @@ def insert_into_transaction_items_table(connection, transaction_id, temp_transac
         # print('insert_into_transaction_items_table completed')
     except Exception as e:
         print(f'insert_into_transaction_items_table error: {e}')
+
+def lambda_handler(event, context):
+    print(f"cool-bean-etl-function: invoked, event={event}")
+    try:
+        for msg_id, msg in enumerate(event['Records']):
+            print(f'lambda_handler: message_id = {msg_id}')
+            message_body = msg['body']
+            message_body_json = json.loads(message_body)
+            print('lambda_handler: message_body_json loaded okay')
+
+            unique_locations = message_body_json['body_locations']
+            unique_items = message_body_json['body_items']
+            transactions = message_body_json['body_transactions']
+            baskets = message_body_json['body_baskets']
+
+            print('Starting set up connection redshift')
+            ssm_client = boto3.client('ssm')
+            parameter_details = ssm_client.get_parameter(Name='cool-beans-redshift-settings')
+            redshift_details = json.loads(parameter_details['Parameter']['Value'])
+
+            # Gets the login info to database
+            rs_host = redshift_details['host']
+            rs_port = redshift_details['port']
+            rs_database_name = redshift_details['database-name']
+            rs_user = redshift_details['user']
+            rs_password = redshift_details['password']
+            print('Completed retrieving the connection details')
+
+            # CREATING DATABASE
+            connection = cdb.setup_db_connection(host=rs_host, 
+                                            user=rs_user, 
+                                            password=rs_password,
+                                            db=rs_database_name,
+                                            port = rs_port)
+
+            #LOADING DATABASE
+            insert_into_location_table(connection, unique_locations)
+            insert_into_item_table(connection, unique_items)
+            insert_into_transactions_table(connection, transactions, baskets)
+
+    except Exception as e:
+        print(f"Lambda Handler Error = {e}") 

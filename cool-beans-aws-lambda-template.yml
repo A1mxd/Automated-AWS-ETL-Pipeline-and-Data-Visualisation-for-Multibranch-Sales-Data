@@ -1,7 +1,7 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
 Description: >
-  Cool-Beans-Final_Project template to deploy a lambda which is triggered by an S3 event.
+  Cool-Beans-Final_Project template to deploy extract-transform lambda and load lambda which are triggered by SQS events.
 
 Parameters:
   BucketNameRawData:
@@ -23,6 +23,12 @@ Resources:
     Type: "AWS::SQS::Queue"
     Properties:
       QueueName: cool_beans_s3_transform_queue
+      VisibilityTimeout: 400
+
+  TransformToLoadQueue:
+    Type: "AWS::SQS::Queue"
+    Properties:
+      QueueName: cool_beans_transform_to_load_queue
       VisibilityTimeout: 400
 
 
@@ -48,12 +54,50 @@ Resources:
       Queues:
         - Ref: S3ToTransformQueue
 
-  LambdaETLFunction:
+  TransformToLoadQueuePolicy:
+    Type: "AWS::SQS::QueuePolicy"
+    Properties:
+      PolicyDocument:
+        Version: "2012-10-17"
+        Id: TransformToLoadQueuePolicy
+        Statement:
+          - Sid: Allow-SendMessage-To-Queue-From-Lambda-Event-Notification
+            Effect: Allow
+            Principal: 
+              Service: "lambda.amazonaws.com"
+            Action:
+              - "sqs:SendMessage"
+            Resource: !GetAtt TransformToLoadQueue.Arn
+            Condition:
+              ArnLike:
+                aws:SourceArn: !Join ["",['arn:aws:lambda:::',!Ref LambdaExtractTransformFunction]]
+              StringEquals:
+                aws:SourceAccount: !Ref AWS::AccountId
+      Queues:
+        - Ref: TransformToLoadQueue
+
+  LambdaExtractTransformFunction:
     Type: AWS::Lambda::Function
     Properties:
-      FunctionName: cool-beans-ETL-function
+      FunctionName: cool-beans-extract-transform-function
       Runtime: python3.10
       Handler: lambda_function.lambda_handler
+      Role: arn:aws:iam::015206308301:role/lambda-execution-role
+      Timeout: 300 
+      Code: ./src
+      VpcConfig:
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+        SubnetIds:
+          - !Ref VpcSubnetId
+    DependsOn: TransformToLoadQueuePolicy
+
+  LambdaLoadFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: cool-beans-load-function
+      Runtime: python3.10
+      Handler: load_database.lambda_handler
       Role: arn:aws:iam::015206308301:role/lambda-execution-role
       Timeout: 300 
       Code: ./src
@@ -94,4 +138,12 @@ Resources:
       BatchSize: 10
       Enabled: true
       EventSourceArn: !GetAtt S3ToTransformQueue.Arn
-      FunctionName: !GetAtt LambdaETLFunction.Arn
+      FunctionName: !GetAtt LambdaExtractTransformFunction.Arn
+
+  TransformToLoadFunctionEventSourceMapping:
+    Type: AWS::Lambda::EventSourceMapping
+    Properties:
+      BatchSize: 10
+      Enabled: true
+      EventSourceArn: !GetAtt TransformToLoadQueue.Arn
+      FunctionName: !GetAtt LambdaLoadFunction.Arn

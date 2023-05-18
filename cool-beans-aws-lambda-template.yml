@@ -138,11 +138,6 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref BucketNameTransformedData
-      NotificationConfiguration:
-        QueueConfigurations:
-          - Event: s3:ObjectCreated:*
-            Queue: !GetAtt TransformToLoadQueue.Arn
-    DependsOn: TransformToLoadQueuePolicy
 
   S3ToTransformFunctionEventSourceMapping:
     Type: AWS::Lambda::EventSourceMapping

@@ -53,20 +53,3 @@ def convert_all_dates(list_of_dicts, date_cols,
                 dict[col] = None
             
     return list_of_dicts
-
-
-def get_unique_items(basket_item_list):
-    item_list = [] # list of strings, name of item
-    unique_items = [] # list of dictionaries, item data
-    for dict in basket_item_list:
-        if dict['item_name'] not in item_list:
-            item_list.append(dict['item_name']) # append item name to list for filtering
-            unique_items.append(dict) # append item data to list to return at end
-    return unique_items
-
-def get_unique_locations(transaction_list):
-    unique_locations = [] # list of strings, name of location
-    for dict in transaction_list:
-        if dict['location'] not in unique_locations:
-            unique_locations.append(dict['location']) # append location name to return at end
-    return unique_locations

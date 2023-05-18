@@ -7,6 +7,22 @@ items table, locations table, transaction-items table and transaction table.
 This module has function to check if entries are duplicate.
 """
 
+def get_unique_items(basket_item_list):
+    item_list = [] # list of strings, name of item
+    unique_items = [] # list of dictionaries, item data
+    for dict in basket_item_list:
+        if dict['item_name'] not in item_list:
+            item_list.append(dict['item_name']) # append item name to list for filtering
+            unique_items.append(dict) # append item data to list to return at end
+    return unique_items
+
+def get_unique_locations(transaction_list):
+    unique_locations = [] # list of strings, name of location
+    for dict in transaction_list:
+        if dict['location'] not in unique_locations:
+            unique_locations.append(dict['location']) # append location name to return at end
+    return unique_locations
+
 # takes unique location names and inserts into locations table
 def insert_into_location_table(connection, unique_location_list):
     try:
@@ -149,7 +165,7 @@ def insert_into_transaction_items_table(connection, transaction_id, temp_transac
         print(f'insert_into_transaction_items_table error: {e}')
 
 def lambda_handler(event, context):
-    print(f"cool-bean-etl-function: invoked, event={event}")
+    print(f"cool-bean-load-function: invoked, event={event}")
     try:
         for msg_id, msg in enumerate(event['Records']):
             print(f'lambda_handler: message_id = {msg_id}')
@@ -157,11 +173,18 @@ def lambda_handler(event, context):
             message_body_json = json.loads(message_body)
             print('lambda_handler: message_body_json loaded okay')
 
-            unique_locations = message_body_json['body_locations']
-            unique_items = message_body_json['body_items']
+            transactions_file = message_body_json['transactions_key']
+            baskets_file = message_body_json['baskets_key']
+            
+            bucket_name = message_body_json['bucket']
+            print(f'Lambda Handler: bucket name = {bucket_name}, file = {transactions_file}') #CHECKS FOR CORRECT CSV FILE/BUCKET
+            print(f'Lambda Handler: bucket name = {bucket_name}, file = {baskets_file}') #CHECKS FOR CORRECT CSV FILE/BUCKET
+
+
             transactions = message_body_json['body_transactions']
             baskets = message_body_json['body_baskets']
-
+ ## WIP from here! 
+ 
             print('Starting set up connection redshift')
             ssm_client = boto3.client('ssm')
             parameter_details = ssm_client.get_parameter(Name='cool-beans-redshift-settings')
@@ -189,3 +212,8 @@ def lambda_handler(event, context):
 
     except Exception as e:
         print(f"Lambda Handler Error = {e}") 
+
+
+
+                    unique_items = et.get_unique_items(baskets)
+            unique_locations = et.get_unique_locations(transactions)

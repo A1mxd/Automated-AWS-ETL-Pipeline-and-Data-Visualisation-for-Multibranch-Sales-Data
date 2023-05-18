@@ -1,39 +1,12 @@
 import boto3
-import csv
 import os
 import logging
-import create_database as cdb
 import extract_transform as et
-import load_database as db
+import csv_reader_writer as cr
 import json
-
-
-def extract_csv_from_bucket(bucket_name, file_name, s3, column_names):
-    
-    transaction_list = []
-
-    try:        
-        csv_file = s3.get_object(Bucket=bucket_name, Key=file_name)
-        print(f"Getting csv file: bucket name = {bucket_name}, key = {file_name}")
-        transactions = csv_file['Body'].read().decode('utf-8').splitlines()
-        print(f"Read csv file: bucket name = {bucket_name}, key = {file_name}")
-        reader = csv.reader(transactions)
-
-        for line in reader:   
-            transaction_entry = {} 
-            for i, column_name in enumerate(column_names):
-                transaction_entry[column_name] = line[i]
-               
-            transaction_list.append(transaction_entry)
-        print(f'Extracted csv file: Rows = {len(transaction_list)}, bucket name = {bucket_name}')        
-        return transaction_list
-        
-    except Exception as e:
-        print(f"Lambda Extracting error = {e}")
-        
     
 def lambda_handler(event, context):
-    print(f"cool-bean-etl-function: invoked, event={event}")
+    print(f"cool-bean-extract-transform-function: invoked, event={event}")
     try:
         s3 = boto3.client('s3')
         sqs = boto3.client('sqs')
@@ -49,7 +22,8 @@ def lambda_handler(event, context):
             print(f'Lambda Handler: bucket name = {bucket_name}, file = {file_name}') #CHECKS FOR CORRECT CSV FILE/BUCKET
                   
             #EXTRACTING 
-            transactions = extract_csv_from_bucket(bucket_name, file_name, s3)
+            column_names = ['date_time', 'location', 'customer_name', 'basket', 'total_price', 'payment_method', 'card_number']
+            transactions = cr.extract_csv_from_raw_data_bucket(bucket_name, file_name, s3, column_names)
             
             # TRANSFORMING
             sensitive_data = ["customer_name", "card_number"]
@@ -59,19 +33,20 @@ def lambda_handler(event, context):
 
             transactions = et.convert_all_dates(transactions, ['date_time'])
 
-            unique_items = et.get_unique_items(baskets)
-            unique_locations = et.get_unique_locations(transactions)
+            cr.write_csv("baskets.csv", baskets)
+            cr.write_csv('transactions.csv', transactions)
 
             # SENDING TO S3
-            s3.upload_file(bucket_name, file_name)
+            transformed_bucket_name = 'cool-beans-transformed-data'
+            s3.upload_file("baskets.csv", transformed_bucket_name, file_name)
+            s3.upload_file("transactions.csv", transformed_bucket_name, file_name)
             print(f"Uploading to S3 into bucket {bucket_name} with key {file_name}")
             
             # SENDING MESSAGE TO SQS
             message ={
-            'body_items': unique_items,
-            'body_locations': unique_locations,
-            'body_transactions': transactions,
-            'body_baskets': baskets
+                'bucket': 'cool-beans-transformed-data',
+                'transactions_key': "transactions.csv",
+                'baskets_key': "baskets.csv"
         }
             json_message = json.dumps(message)
 

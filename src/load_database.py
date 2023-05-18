@@ -2,12 +2,16 @@ import boto3
 import create_database as cdb
 import json
 
-""" This module has functions to insert into: 
+""" This module has functions to insert into Redshift database: 
 items table, locations table, transaction-items table and transaction table. 
 This module has function to check if entries are duplicate.
 """
 
 def get_unique_items(basket_item_list):
+    """
+    This function creates and returns unique items list of dictinaries.
+    """
+
     item_list = [] # list of strings, name of item
     unique_items = [] # list of dictionaries, item data
     for dict in basket_item_list:
@@ -17,6 +21,10 @@ def get_unique_items(basket_item_list):
     return unique_items
 
 def get_unique_locations(transaction_list):
+    """
+    This function creates and returns unique locations list.
+    """
+
     unique_locations = [] # list of strings, name of location
     for dict in transaction_list:
         if dict['location'] not in unique_locations:
@@ -165,7 +173,11 @@ def insert_into_transaction_items_table(connection, transaction_id, temp_transac
         print(f'insert_into_transaction_items_table error: {e}')
 
 def lambda_handler(event, context):
-    print(f"cool-bean-load-function: invoked, event={event}")
+    """
+    This lambda function gets transformed data from AWS S3 bucket and loads it to AWS Redshift.
+    """
+
+    print(f"cool-beans-load-function: invoked, event={event}")
     try:
         for msg_id, msg in enumerate(event['Records']):
             print(f'lambda_handler: message_id = {msg_id}')
@@ -184,7 +196,10 @@ def lambda_handler(event, context):
             transactions = message_body_json['body_transactions']
             baskets = message_body_json['body_baskets']
  ## WIP from here! 
- 
+
+            unique_items = get_unique_items(baskets)
+            unique_locations = get_unique_locations(transactions)
+
             print('Starting set up connection redshift')
             ssm_client = boto3.client('ssm')
             parameter_details = ssm_client.get_parameter(Name='cool-beans-redshift-settings')
@@ -212,8 +227,3 @@ def lambda_handler(event, context):
 
     except Exception as e:
         print(f"Lambda Handler Error = {e}") 
-
-
-
-                    unique_items = et.get_unique_items(baskets)
-            unique_locations = et.get_unique_locations(transactions)

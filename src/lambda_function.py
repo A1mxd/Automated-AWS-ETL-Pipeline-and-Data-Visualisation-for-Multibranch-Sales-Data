@@ -6,7 +6,12 @@ import csv_reader_writer as cr
 import json
     
 def lambda_handler(event, context):
-    print(f"cool-bean-extract-transform-function: invoked, event={event}")
+    """
+    This lambda function gets raw data from AWS S3 bucket, transformes it and 
+    loads it to another AWS S3 bucket.
+    """
+
+    print(f"cool-beans-extract-transform-function: invoked, event={event}")
     try:
         s3 = boto3.client('s3')
         sqs = boto3.client('sqs')

@@ -5,6 +5,7 @@ def remove_sensitive_data(transactions, sensitive_data):
     sensitive data(customer_name and card number columns),
     and removes those columns from the each dictionary of transactions.
     """
+    
     for transaction in transactions:
         for data in sensitive_data:
             if data in transaction:
@@ -41,7 +42,11 @@ def create_item_list(transactions):
 def convert_all_dates(list_of_dicts, date_cols, 
                       current_format='%d/%m/%Y %H:%M',
                       expected_format='%Y-%m-%d %H:%M'):
-
+    """
+    This function takes list of dictionaries and key of date column, 
+    and converts date_time value."
+    """
+    
     for dict in list_of_dicts:
         for col in date_cols:
             try:
@@ -53,3 +58,13 @@ def convert_all_dates(list_of_dicts, date_cols,
                 dict[col] = None
             
     return list_of_dicts
+
+if __name__ == '__main__':
+ 
+    transaction_entry = [{
+                    "date_time": '18/05/2023 10:05',
+                    "location" : 'London'
+                    }]
+    date = convert_all_dates(transaction_entry, ['date_time'])
+    
+    print(date[0]['date_time'])

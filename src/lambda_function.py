@@ -8,7 +8,7 @@ import load_database as db
 import json
 
 
-def extract_csv_from_bucket(bucket_name, file_name, s3):
+def extract_csv_from_bucket(bucket_name, file_name, s3, column_names):
     
     transaction_list = []
 
@@ -19,17 +19,12 @@ def extract_csv_from_bucket(bucket_name, file_name, s3):
         print(f"Read csv file: bucket name = {bucket_name}, key = {file_name}")
         reader = csv.reader(transactions)
 
-        for line in reader:
-                transaction_entry = {
-                    "date_time": line[0],
-                    "location" : line[1],
-                    "customer_name": line[2],
-                    "basket": line[3],
-                    "total_price" : line[4],
-                    "payment_method" : line[5],
-                    "card_number": line[6]
-                    }
-                transaction_list.append(transaction_entry)
+        for line in reader:   
+            transaction_entry = {} 
+            for i, column_name in enumerate(column_names):
+                transaction_entry[column_name] = line[i]
+               
+            transaction_list.append(transaction_entry)
         print(f'Extracted csv file: Rows = {len(transaction_list)}, bucket name = {bucket_name}')        
         return transaction_list
         
@@ -91,9 +86,8 @@ def lambda_handler(event, context):
     except Exception as e:
         print(f"Lambda Handler Error = {e}") 
 
-    
-    
-    
-
-    
-    
+# if __name__ == '__main__':
+#     bucket_name = 'cool_beans'
+#     file_name = 'london'
+#     s3 = 
+#     extract_csv_from_bucket(bucket_name, file_name, s3, column_names)

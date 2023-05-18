@@ -7,7 +7,7 @@ Parameters:
   BucketNameRawData:
     Type: String
     Description: S3 bucket for Cool-Beans-Final-Project raw data.
-    Default: cool-beans-raw-data-bucket
+    Default: cool-beans-raw-data-reader
   BucketNameTransformedData:
     Type: String
     Description: S3 bucket for Cool-Beans-Final-Project transformed data.
@@ -112,7 +112,7 @@ Resources:
   LambdaCreateDatabaseFunction:
     Type: AWS::Lambda::Function
     Properties:
-      FunctionName: cool-beans-create-db-function
+      FunctionName: cool-beans-create-database-function
       Runtime: python3.10
       Handler: create_database.lambda_handler
       Role: arn:aws:iam::015206308301:role/lambda-execution-role
@@ -124,7 +124,7 @@ Resources:
         SubnetIds:
           - !Ref VpcSubnetId
 
-  S3BucketRawData:
+  S3Bucket:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref BucketNameRawData

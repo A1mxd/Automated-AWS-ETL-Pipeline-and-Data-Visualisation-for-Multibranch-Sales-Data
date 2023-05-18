@@ -8,6 +8,10 @@ Parameters:
     Type: String
     Description: S3 bucket for Cool-Beans-Final-Project raw data.
     Default: cool-beans-raw-data-reader
+  BucketNameTransformedData:
+    Type: String
+    Description: S3 bucket for Cool-Beans-Final-Project transformed data.
+    Default: cool-beans-transformed-data
   VpcSubnetId:
     Type: String
     Description: The Redshift private subnet id
@@ -18,7 +22,6 @@ Parameters:
     Default: sg-0e6c507aa8ae2a367
 
 Resources:
-
   S3ToTransformQueue:
     Type: "AWS::SQS::Queue"
     Properties:
@@ -90,7 +93,6 @@ Resources:
           - !Ref SecurityGroupId
         SubnetIds:
           - !Ref VpcSubnetId
-    DependsOn: TransformToLoadQueuePolicy
 
   LambdaLoadFunction:
     Type: AWS::Lambda::Function
@@ -122,7 +124,7 @@ Resources:
         SubnetIds:
           - !Ref VpcSubnetId
 
-  S3Bucket:
+  S3BucketRawData:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref BucketNameRawData
@@ -131,6 +133,16 @@ Resources:
           - Event: s3:ObjectCreated:*
             Queue: !GetAtt S3ToTransformQueue.Arn
     DependsOn: S3ToTransformQueuePolicy
+
+  S3BucketTransformedData:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketNameTransformedData
+      NotificationConfiguration:
+        QueueConfigurations:
+          - Event: s3:ObjectCreated:*
+            Queue: !GetAtt TransformToLoadQueue.Arn
+    DependsOn: TransformToLoadQueuePolicy
 
   S3ToTransformFunctionEventSourceMapping:
     Type: AWS::Lambda::EventSourceMapping

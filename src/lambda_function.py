@@ -43,7 +43,7 @@ def lambda_handler(event, context):
     try:
         s3 = boto3.client('s3')
         # file name inputted in the s3 bucket
-        for msg_id, msg in enumerate(event['Records'][0]):
+        for msg_id, msg in enumerate(event['Records']):
             print(f'lambda_handler: message_id = {msg_id}')
             message_body = msg['body']
             message_body_json = json.loads(message_body)

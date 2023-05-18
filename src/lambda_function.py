@@ -39,54 +39,59 @@ def extract_csv_from_bucket(bucket_name, file_name, s3):
         
     
 def lambda_handler(event, context):
+    print(f"cool-bean-etl-function: invoked, event={event}")
     try:
         s3 = boto3.client('s3')
         # file name inputted in the s3 bucket
-        print(f"cool-bean-etl-function: invoked, event={event}")
-        file_name = event['Records'][0]['body']['Records'][0]['s3']['object']['key']
+        for msg_id, msg in enumerate(event['Records'][0]):
+            print(f'lambda_handler: message_id = {msg_id}')
+            message_body = msg['body']
+            message_body_json = json.loads(message_body)
+            print('lambda_handler: message_body_json loaded okay')
+            file_name = message_body_json['Records'][0]['s3']['object']['key']
+            
+            bucket_name = message_body_json['Records'][0]['s3']['bucket']['name']
+            print(f'Lambda Handler: bucket name = {bucket_name}, file = {file_name}') #CHECKS FOR CORRECT CSV FILE/BUCKET
         
-        bucket_name = event['Records'][0]['body']['Records'][0]['s3']['bucket']['name']
-        print(f'Lambda Handler: bucket name = {bucket_name}, file = {file_name}') #CHECKS FOR CORRECT CSV FILE/BUCKET
-        
-        print('Starting set up connection redshift')
-        ssm_client = boto3.client('ssm')
-        parameter_details = ssm_client.get_parameter(Name='cool-beans-redshift-settings')
-        redshift_details = json.loads(parameter_details['Parameter']['Value'])
+            print('Starting set up connection redshift')
+            ssm_client = boto3.client('ssm')
+            parameter_details = ssm_client.get_parameter(Name='cool-beans-redshift-settings')
+            redshift_details = json.loads(parameter_details['Parameter']['Value'])
 
-        # Gets the login info to database
-        rs_host = redshift_details['host']
-        rs_port = redshift_details['port']
-        rs_database_name = redshift_details['database-name']
-        rs_user = redshift_details['user']
-        rs_password = redshift_details['password']
-        print('Completed retrieving the connection details')
+            # Gets the login info to database
+            rs_host = redshift_details['host']
+            rs_port = redshift_details['port']
+            rs_database_name = redshift_details['database-name']
+            rs_user = redshift_details['user']
+            rs_password = redshift_details['password']
+            print('Completed retrieving the connection details')
 
-        # CREATING DATABASE
-        connection = cdb.setup_db_connection(host=rs_host, 
-                                        user=rs_user, 
-                                        password=rs_password,
-                                        db=rs_database_name,
-                                        port = rs_port)
-        
-        #EXTRACTING 
-        transactions = extract_csv_from_bucket(bucket_name, file_name, s3)
-        
-        # TRANSFORMING
-        sensitive_data = ["customer_name", "card_number"]
-        et.remove_sensitive_data(transactions, sensitive_data)
-        
-        baskets = et.create_item_list(transactions)
+            # CREATING DATABASE
+            connection = cdb.setup_db_connection(host=rs_host, 
+                                            user=rs_user, 
+                                            password=rs_password,
+                                            db=rs_database_name,
+                                            port = rs_port)
+            
+            #EXTRACTING 
+            transactions = extract_csv_from_bucket(bucket_name, file_name, s3)
+            
+            # TRANSFORMING
+            sensitive_data = ["customer_name", "card_number"]
+            et.remove_sensitive_data(transactions, sensitive_data)
+            
+            baskets = et.create_item_list(transactions)
 
-        transactions = et.convert_all_dates(transactions, ['date_time'])
+            transactions = et.convert_all_dates(transactions, ['date_time'])
 
-        unique_items = et.get_unique_items(baskets)
-        unique_locations = et.get_unique_locations(transactions)
+            unique_items = et.get_unique_items(baskets)
+            unique_locations = et.get_unique_locations(transactions)
 
-        #LOADING DATABASE
-        db.insert_into_location_table(connection, unique_locations)
-        db.insert_into_item_table(connection, unique_items)
-        db.insert_into_transactions_table(connection, transactions, baskets)
-        
+            #LOADING DATABASE
+            db.insert_into_location_table(connection, unique_locations)
+            db.insert_into_item_table(connection, unique_items)
+            db.insert_into_transactions_table(connection, transactions, baskets)
+            
         return {
             'statusCode': 200,
             'body': unique_items

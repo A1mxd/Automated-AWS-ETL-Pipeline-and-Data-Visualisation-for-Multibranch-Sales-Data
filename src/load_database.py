@@ -10,7 +10,7 @@ This module has function to check if entries are duplicate.
 
 def get_unique_items(basket_item_list):
     """
-    This function creates and returns unique items list of dictinaries.
+    This function creates and returns unique items list of dictionaries.
     """
 
     item_list = [] # list of strings, name of item

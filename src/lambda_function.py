@@ -7,7 +7,7 @@ import json
     
 def lambda_handler(event, context):
     """
-    This lambda function gets raw data from AWS S3 bucket, transformes it and 
+    This lambda function gets raw data from AWS S3 bucket, transforms it and 
     loads it to another AWS S3 bucket.
     """
 
@@ -71,9 +71,3 @@ def lambda_handler(event, context):
 
     except Exception as e:
         print(f"Lambda Handler Error = {e}") 
-
-# if __name__ == '__main__':
-#     bucket_name = 'cool_beans'
-#     file_name = 'london'
-#     s3 = 
-#     extract_csv_from_bucket(bucket_name, file_name, s3, column_names)

@@ -45,7 +45,7 @@ def lambda_handler(event, context):
             transformed_bucket_name = 'cool-beans-transformed-data'
             tranformed_baskets_name = file_name[:-4] + '_baskets.csv'
 
-            transformed_transactions_name =file_name[:-4] + '_transactions.csv'
+            transformed_transactions_name = file_name[:-4] + '_transactions.csv'
 
 
             s3.upload_file("/tmp/baskets.csv", transformed_bucket_name, tranformed_baskets_name)
@@ -62,13 +62,12 @@ def lambda_handler(event, context):
         }
             json_message = json.dumps(message)
 
-            queue_url = os.environ.get("cool_beans_transform_to_load_queue_url")
+            queue_url = "https://sqs.eu-west-1.amazonaws.com/015206308301/cool_beans_transform_to_load_queue"
 
             print(f"Sending SQS message {json_message} to queue {queue_url}")
             sqs.send_message(
                  QueueUrl = queue_url,
-                 MessageBody = json_message,
-                 MessageGroupId = '1') #Always same group ID to limit concurrency
+                 MessageBody = json_message)
 
     except Exception as e:
         print(f"Lambda Handler Error = {e}") 

@@ -38,13 +38,13 @@ def lambda_handler(event, context):
 
             transactions = et.convert_all_dates(transactions, ['date_time'])
 
-            cr.write_csv("baskets.csv", baskets)
-            cr.write_csv('transactions.csv', transactions)
+            cr.write_csv("/tmp/baskets.csv", baskets)
+            cr.write_csv('/tmp/transactions.csv', transactions)
 
             # SENDING TO S3
             transformed_bucket_name = 'cool-beans-transformed-data'
-            s3.upload_file("baskets.csv", transformed_bucket_name, file_name)
-            s3.upload_file("transactions.csv", transformed_bucket_name, file_name)
+            s3.upload_file("/tmp/baskets.csv", transformed_bucket_name, file_name)
+            s3.upload_file("/tmp/transactions.csv", transformed_bucket_name, file_name)
             print(f"Uploading to S3 into bucket {bucket_name} with key {file_name}")
             
             # SENDING MESSAGE TO SQS

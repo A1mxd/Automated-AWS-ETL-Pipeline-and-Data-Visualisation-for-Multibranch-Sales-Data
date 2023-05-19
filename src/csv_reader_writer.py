@@ -55,7 +55,7 @@ def write_csv(file, data):
     This function writes a new CSV file.
     """
 
-    with open(file, 'w') as f:
+    with open(file, 'w+') as f:
         dict_writer = csv.DictWriter(f, fieldnames = data[0].keys())
         dict_writer.writeheader()
         dict_writer.writerows(data)

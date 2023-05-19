@@ -61,7 +61,7 @@ def lambda_handler(event, context):
         }
             json_message = json.dumps(message)
 
-            queue_url = os.environ.get("https://sqs.eu-west-1.amazonaws.com/015206308301/cool_beans_transform_to_load_queue")
+            queue_url = "https://sqs.eu-west-1.amazonaws.com/015206308301/cool_beans_transform_to_load_queue"
 
             print(f"Sending SQS message {json_message} to queue {queue_url}")
             sqs.send_message(

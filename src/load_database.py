@@ -1,6 +1,7 @@
 import boto3
 import create_database as cdb
 import json
+from csv_reader_writer import extract_csv_from_bucket_with_column_names
 
 """ This module has functions to insert into Redshift database: 
 items table, locations table, transaction-items table and transaction table. 
@@ -179,6 +180,7 @@ def lambda_handler(event, context):
 
     print(f"cool-beans-load-function: invoked, event={event}")
     try:
+        s3 = boto3.client('s3')
         for msg_id, msg in enumerate(event['Records']):
             print(f'lambda_handler: message_id = {msg_id}')
             message_body = msg['body']
@@ -192,10 +194,8 @@ def lambda_handler(event, context):
             print(f'Lambda Handler: bucket name = {bucket_name}, file = {transactions_file}') #CHECKS FOR CORRECT CSV FILE/BUCKET
             print(f'Lambda Handler: bucket name = {bucket_name}, file = {baskets_file}') #CHECKS FOR CORRECT CSV FILE/BUCKET
 
-
-            transactions = message_body_json['body_transactions']
-            baskets = message_body_json['body_baskets']
- ## WIP from here! 
+            transactions = extract_csv_from_bucket_with_column_names(bucket_name, transactions_file, s3)
+            baskets = extract_csv_from_bucket_with_column_names(bucket_name, baskets_file, s3)
 
             unique_items = get_unique_items(baskets)
             unique_locations = get_unique_locations(transactions)
@@ -213,14 +213,14 @@ def lambda_handler(event, context):
             rs_password = redshift_details['password']
             print('Completed retrieving the connection details')
 
-            # CREATING DATABASE
+            # GETTING CONNECTION
             connection = cdb.setup_db_connection(host=rs_host, 
                                             user=rs_user, 
                                             password=rs_password,
                                             db=rs_database_name,
                                             port = rs_port)
 
-            #LOADING DATABASE
+            #INSERTING INTO DATABASE
             insert_into_location_table(connection, unique_locations)
             insert_into_item_table(connection, unique_items)
             insert_into_transactions_table(connection, transactions, baskets)

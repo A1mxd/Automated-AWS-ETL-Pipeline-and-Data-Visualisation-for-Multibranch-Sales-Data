@@ -1,8 +1,8 @@
 from unittest.mock import patch
-from src.extract_transform import get_unique_items, get_unique_locations
+from src.load_database import get_unique_items, get_unique_locations
 
 """
-This module tests unique item/location functions in extract_transform.py module    
+This module tests unique item/location functions in load_database.py module    
 """
 
 # Testing the items are unique

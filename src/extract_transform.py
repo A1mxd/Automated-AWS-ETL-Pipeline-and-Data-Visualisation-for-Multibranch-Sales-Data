@@ -5,6 +5,7 @@ def remove_sensitive_data(transactions, sensitive_data):
     sensitive data(customer_name and card number columns),
     and removes those columns from the each dictionary of transactions.
     """
+    
     for transaction in transactions:
         for data in sensitive_data:
             if data in transaction:
@@ -41,7 +42,11 @@ def create_item_list(transactions):
 def convert_all_dates(list_of_dicts, date_cols, 
                       current_format='%d/%m/%Y %H:%M',
                       expected_format='%Y-%m-%d %H:%M'):
-
+    """
+    This function takes list of dictionaries and key of date column, 
+    and converts date_time value."
+    """
+    
     for dict in list_of_dicts:
         for col in date_cols:
             try:
@@ -54,19 +59,12 @@ def convert_all_dates(list_of_dicts, date_cols,
             
     return list_of_dicts
 
-
-def get_unique_items(basket_item_list):
-    item_list = [] # list of strings, name of item
-    unique_items = [] # list of dictionaries, item data
-    for dict in basket_item_list:
-        if dict['item_name'] not in item_list:
-            item_list.append(dict['item_name']) # append item name to list for filtering
-            unique_items.append(dict) # append item data to list to return at end
-    return unique_items
-
-def get_unique_locations(transaction_list):
-    unique_locations = [] # list of strings, name of location
-    for dict in transaction_list:
-        if dict['location'] not in unique_locations:
-            unique_locations.append(dict['location']) # append location name to return at end
-    return unique_locations
+if __name__ == '__main__':
+ 
+    transaction_entry = [{
+                    "date_time": '18/05/2023 10:05',
+                    "location" : 'London'
+                    }]
+    date = convert_all_dates(transaction_entry, ['date_time'])
+    
+    print(date[0]['date_time'])

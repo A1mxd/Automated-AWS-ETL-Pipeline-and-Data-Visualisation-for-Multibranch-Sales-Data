@@ -87,6 +87,7 @@ Resources:
       Handler: lambda_function.lambda_handler
       Role: arn:aws:iam::015206308301:role/lambda-execution-role
       Timeout: 300 
+      ReservedConcurrentExecutions: 1
       Code: ./src
       VpcConfig:
         SecurityGroupIds:
@@ -102,6 +103,7 @@ Resources:
       Handler: load_database.lambda_handler
       Role: arn:aws:iam::015206308301:role/lambda-execution-role
       Timeout: 300 
+      ReservedConcurrentExecutions: 1
       Code: ./src
       VpcConfig:
         SecurityGroupIds:
@@ -117,6 +119,7 @@ Resources:
       Handler: create_database.lambda_handler
       Role: arn:aws:iam::015206308301:role/lambda-execution-role
       Timeout: 300 
+      ReservedConcurrentExecutions: 1
       Code: ./src
       VpcConfig:
         SecurityGroupIds:

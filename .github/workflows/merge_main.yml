@@ -34,6 +34,6 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: eu-west-1
       - name: Package CloudFormation template
-        run: aws cloudformation package --template-file cool-beans-aws-lambda-template.yml --s3-bucket cool-beans-s3-bucket-stack-1 --output-template-file stack-template-packaged.yml
+        run: aws cloudformation package --template-file cool-beans-aws-cloudformation-template.yml --s3-bucket cool-beans-s3-bucket-stack-1 --output-template-file stack-template-packaged.yml
       - name: Deploy CloudFormation stack
         run: aws cloudformation deploy --stack-name cool-beans-final-project --template-file stack-template-packaged.yml --region eu-west-1 --capabilities CAPABILITY_IAM

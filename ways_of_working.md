@@ -26,9 +26,33 @@
 
 ----
 
-## Issues
+----
+# The MoSCoW
 
-To-be-decided
+### Must
+* Data visualisation of branches  
+* Data storage in CSV
+* Importing and exporting function
+* ETL
+* Collect sales data from each branch  
+* Application monitoring software will be used to produce operational metrics, such as system errors, up-time and more
+* GUI
+* Error checking / Unit test
+
+### Should
+* Frequency of purchase of items
+* General customer data 
+* User friendly app
+
+### Could
+* Tracking what products are purchased together
+* Personalised customer data 
+* Data about specific locations
+
+### Won't
+* Handling Courier data 
+* Compare products
+
 
 ----
 
@@ -47,11 +71,6 @@ We are spliting the epic goals into smaller chunks using 'to-do weekly breakdown
 * Readability of the code should be easy to understand by commenting/doc strings and having good format(variables and function names should be self explanatory)
 * Code carries out all intended functionality
 * Agree as a team that the task is done
-
-----
-
-## Coding Standards
-TBD
 
 ----
 

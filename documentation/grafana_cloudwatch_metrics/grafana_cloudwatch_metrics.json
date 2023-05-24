@@ -1,0 +1,1300 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 5,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Number of Invocations",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 11,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+          },
+          "dimensions": {
+            "FunctionName": "cool-beans-extract-transform-function"
+          },
+          "expression": "",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "arn": "/aws/lambda/cool-beans-ETL-function",
+              "name": "/aws/lambda/cool-beans-ETL-function"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "Invocations",
+          "metricQueryType": 0,
+          "namespace": "AWS/Lambda",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "eu-west-1",
+          "sql": {
+            "from": {
+              "property": {
+                "name": "AWS/Lambda",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "select": {
+              "name": "MAX",
+              "parameters": [
+                {
+                  "name": "Invocations",
+                  "type": "functionParameter"
+                }
+              ],
+              "type": "function"
+            }
+          },
+          "sqlExpression": "SELECT MAX(Invocations) FROM \"AWS/Lambda\"",
+          "statistic": "Sum"
+        }
+      ],
+      "timeFrom": "3d",
+      "title": "Extract & Transform  Function Invocation",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Number of Invocations",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+          },
+          "dimensions": {
+            "FunctionName": "cool-beans-load-function"
+          },
+          "expression": "",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "arn": "/aws/lambda/cool-beans-ETL-function",
+              "name": "/aws/lambda/cool-beans-ETL-function"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "Invocations",
+          "metricQueryType": 0,
+          "namespace": "AWS/Lambda",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "eu-west-1",
+          "sql": {
+            "from": {
+              "property": {
+                "name": "AWS/Lambda",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "select": {
+              "name": "MAX",
+              "parameters": [
+                {
+                  "name": "Invocations",
+                  "type": "functionParameter"
+                }
+              ],
+              "type": "function"
+            }
+          },
+          "sqlExpression": "SELECT MAX(Invocations) FROM \"AWS/Lambda\"",
+          "statistic": "Sum"
+        }
+      ],
+      "timeFrom": "3d",
+      "title": "Load Function Invocation",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "series",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 40,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 5,
+            "pointSize": 19,
+            "scaleDistribution": {
+              "log": 2,
+              "type": "log"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 11,
+        "x": 0,
+        "y": 7
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "timezone": [
+          "browser"
+        ],
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+          },
+          "dimensions": {
+            "FunctionName": "cool-beans-extract-transform-function"
+          },
+          "expression": "",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "arn": "/aws/lambda/cool-beans-ETL-function",
+              "name": "/aws/lambda/cool-beans-ETL-function"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "Duration",
+          "metricQueryType": 0,
+          "namespace": "AWS/Lambda",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "eu-west-1",
+          "sql": {
+            "from": {
+              "property": {
+                "name": "AWS/Lambda",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "select": {
+              "name": "MAX",
+              "parameters": [
+                {
+                  "name": "Invocations",
+                  "type": "functionParameter"
+                }
+              ],
+              "type": "function"
+            }
+          },
+          "sqlExpression": "SELECT MAX(Invocations) FROM \"AWS/Lambda\"",
+          "statistic": "Sum"
+        }
+      ],
+      "timeFrom": "24h",
+      "title": "Duration of Lambda Invocation - cool-beans-extract-transform-function",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "series",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 40,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 5,
+            "pointSize": 19,
+            "scaleDistribution": {
+              "log": 2,
+              "type": "log"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 7
+      },
+      "id": 13,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "timezone": [
+          "browser"
+        ],
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+          },
+          "dimensions": {
+            "FunctionName": "cool-beans-load-function"
+          },
+          "expression": "",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "arn": "/aws/lambda/cool-beans-ETL-function",
+              "name": "/aws/lambda/cool-beans-ETL-function"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "Duration",
+          "metricQueryType": 0,
+          "namespace": "AWS/Lambda",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "eu-west-1",
+          "sql": {
+            "from": {
+              "property": {
+                "name": "AWS/Lambda",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "select": {
+              "name": "MAX",
+              "parameters": [
+                {
+                  "name": "Invocations",
+                  "type": "functionParameter"
+                }
+              ],
+              "type": "function"
+            }
+          },
+          "sqlExpression": "SELECT MAX(Invocations) FROM \"AWS/Lambda\"",
+          "statistic": "Sum"
+        }
+      ],
+      "timeFrom": "24h",
+      "title": "Duration of Lambda Invocation - cool-beans-load-function",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 11,
+        "x": 0,
+        "y": 15
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+          },
+          "dimensions": {
+            "FunctionName": "cool-beans-extract-transform-function"
+          },
+          "expression": "",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "arn": "/aws/lambda/cool-beans-ETL-function",
+              "name": "/aws/lambda/cool-beans-ETL-function"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "ConcurrentExecutions",
+          "metricQueryType": 0,
+          "namespace": "AWS/Lambda",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "eu-west-1",
+          "sql": {
+            "from": {
+              "property": {
+                "name": "AWS/Lambda",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "select": {
+              "name": "MAX",
+              "parameters": [
+                {
+                  "name": "Invocations",
+                  "type": "functionParameter"
+                }
+              ],
+              "type": "function"
+            }
+          },
+          "sqlExpression": "SELECT MAX(Invocations) FROM \"AWS/Lambda\"",
+          "statistic": "SampleCount"
+        }
+      ],
+      "timeFrom": "24h",
+      "title": "Extract & Transform Function - Total Concurrent Executions In 24h",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 15
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+          },
+          "dimensions": {
+            "FunctionName": "cool-beans-load-function"
+          },
+          "expression": "",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "arn": "/aws/lambda/cool-beans-ETL-function",
+              "name": "/aws/lambda/cool-beans-ETL-function"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "ConcurrentExecutions",
+          "metricQueryType": 0,
+          "namespace": "AWS/Lambda",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "eu-west-1",
+          "sql": {
+            "from": {
+              "property": {
+                "name": "AWS/Lambda",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "select": {
+              "name": "MAX",
+              "parameters": [
+                {
+                  "name": "Invocations",
+                  "type": "functionParameter"
+                }
+              ],
+              "type": "function"
+            }
+          },
+          "sqlExpression": "SELECT MAX(Invocations) FROM \"AWS/Lambda\"",
+          "statistic": "SampleCount"
+        }
+      ],
+      "timeFrom": "24h",
+      "title": "Load Function - Total Concurrent Executions In 24h",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              },
+              {
+                "color": "#EAB839",
+                "value": 90
+              },
+              {
+                "color": "#6ED0E0",
+                "value": 100
+              },
+              {
+                "color": "#EF843C",
+                "value": 110
+              },
+              {
+                "color": "#E24D42",
+                "value": 120
+              },
+              {
+                "color": "#1F78C1",
+                "value": 130
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 11,
+        "x": 0,
+        "y": 22
+      },
+      "id": 16,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+          },
+          "dimensions": {
+            "FunctionName": "cool-beans-extract-transform-function",
+            "Resource": "cool-beans-extract-transform-function"
+          },
+          "expression": "",
+          "hide": false,
+          "id": "",
+          "label": "",
+          "logGroups": [],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "Errors",
+          "metricQueryType": 0,
+          "namespace": "AWS/Lambda",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "default",
+          "sqlExpression": "",
+          "statistic": "Sum",
+          "statsGroups": [
+            "time_stamp"
+          ]
+        }
+      ],
+      "title": "Errors - cool-beans-extract-transform-function",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              },
+              {
+                "color": "#EAB839",
+                "value": 90
+              },
+              {
+                "color": "#6ED0E0",
+                "value": 100
+              },
+              {
+                "color": "#EF843C",
+                "value": 110
+              },
+              {
+                "color": "#E24D42",
+                "value": 120
+              },
+              {
+                "color": "#1F78C1",
+                "value": 130
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 11,
+        "x": 12,
+        "y": 22
+      },
+      "id": 15,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+          },
+          "dimensions": {
+            "FunctionName": "cool-beans-load-function",
+            "Resource": "cool-beans-load-function"
+          },
+          "expression": "",
+          "hide": false,
+          "id": "",
+          "label": "",
+          "logGroups": [],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "Errors",
+          "metricQueryType": 0,
+          "namespace": "AWS/Lambda",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "default",
+          "sqlExpression": "",
+          "statistic": "Sum",
+          "statsGroups": [
+            "time_stamp"
+          ]
+        }
+      ],
+      "title": "Errors - cool-beans-load-function",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Number of Invocations",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 8,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 11,
+        "x": 0,
+        "y": 29
+      },
+      "id": 12,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+          },
+          "dimensions": {
+            "FunctionName": "cool-beans-extract-transform-function"
+          },
+          "expression": "",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "accountId": "015206308301",
+              "arn": "arn:aws:logs:eu-west-1:015206308301:log-group:/aws/lambda/cool-beans-extract-transform-function:*",
+              "name": "/aws/lambda/cool-beans-extract-transform-function"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "Invocations",
+          "metricQueryType": 0,
+          "namespace": "AWS/Lambda",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "eu-west-1",
+          "sql": {
+            "from": {
+              "property": {
+                "name": "AWS/Lambda",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "select": {
+              "name": "MAX",
+              "parameters": [
+                {
+                  "name": "Invocations",
+                  "type": "functionParameter"
+                }
+              ],
+              "type": "function"
+            },
+            "where": {
+              "expressions": [
+                {
+                  "operator": {
+                    "name": "=",
+                    "value": "cool-beans-load-function"
+                  },
+                  "property": {
+                    "name": "FunctionName",
+                    "type": "string"
+                  },
+                  "type": "operator"
+                }
+              ],
+              "type": "and"
+            }
+          },
+          "sqlExpression": "SELECT MAX(Invocations) FROM \"AWS/Lambda\" WHERE FunctionName = 'cool-beans-load-function'",
+          "statistic": "Sum"
+        }
+      ],
+      "title": "Invocations - cool-beans-extract-transform-function",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Number of Invocations",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 8,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 29
+      },
+      "id": 14,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "f8234d62-4164-4eeb-aa87-a2e32511a914"
+          },
+          "dimensions": {
+            "FunctionName": "cool-beans-load-function"
+          },
+          "expression": "",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "accountId": "015206308301",
+              "arn": "arn:aws:logs:eu-west-1:015206308301:log-group:/aws/lambda/cool-beans-extract-transform-function:*",
+              "name": "/aws/lambda/cool-beans-extract-transform-function"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "Invocations",
+          "metricQueryType": 0,
+          "namespace": "AWS/Lambda",
+          "period": "",
+          "queryMode": "Metrics",
+          "refId": "A",
+          "region": "eu-west-1",
+          "sql": {
+            "from": {
+              "property": {
+                "name": "AWS/Lambda",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "select": {
+              "name": "MAX",
+              "parameters": [
+                {
+                  "name": "Invocations",
+                  "type": "functionParameter"
+                }
+              ],
+              "type": "function"
+            },
+            "where": {
+              "expressions": [
+                {
+                  "operator": {
+                    "name": "=",
+                    "value": "cool-beans-load-function"
+                  },
+                  "property": {
+                    "name": "FunctionName",
+                    "type": "string"
+                  },
+                  "type": "operator"
+                }
+              ],
+              "type": "and"
+            }
+          },
+          "sqlExpression": "SELECT MAX(Invocations) FROM \"AWS/Lambda\" WHERE FunctionName = 'cool-beans-load-function'",
+          "statistic": "Sum"
+        }
+      ],
+      "title": "Invocations - cool-beans-load-function",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 38
+      },
+      "id": 9,
+      "panels": [],
+      "title": "Row title",
+      "type": "row"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Cool Beans Cloudwatch Metrics Visualisation",
+  "uid": "a62dcd9c-4b34-4e37-9a2d-50e9c40cbf3f",
+  "version": 38,
+  "weekStart": ""
+}

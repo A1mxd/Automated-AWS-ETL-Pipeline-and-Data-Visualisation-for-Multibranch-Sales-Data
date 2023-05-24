@@ -1,0 +1,1845 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 2,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-GrYlRd"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 8,
+          "x": 0,
+          "y": 0
+        },
+        "id": 10,
+        "options": {
+          "displayMode": "basic",
+          "minVizHeight": 10,
+          "minVizWidth": 0,
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [],
+            "fields": "",
+            "values": true
+          },
+          "showUnfilled": true,
+          "text": {},
+          "valueMode": "color"
+        },
+        "pluginVersion": "9.5.1",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Drink_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'Birmingham' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Drink_Sales DESC\r\nLIMIT 5;",
+            "refId": "A"
+          }
+        ],
+        "title": "Top 5 Most Sold Drinks in Birmingham",
+        "type": "bargauge"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-GrYlRd"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 8,
+          "x": 8,
+          "y": 0
+        },
+        "id": 11,
+        "options": {
+          "displayMode": "basic",
+          "minVizHeight": 10,
+          "minVizWidth": 0,
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [],
+            "fields": "",
+            "values": true
+          },
+          "showUnfilled": true,
+          "text": {},
+          "valueMode": "color"
+        },
+        "pluginVersion": "9.5.1",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Drink_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'Chesterfield' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Drink_Sales DESC\r\nLIMIT 5;",
+            "refId": "A"
+          }
+        ],
+        "title": "Top 5 Most Sold Drinks in Chesterfield",
+        "type": "bargauge"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-GrYlRd"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 8,
+          "x": 16,
+          "y": 0
+        },
+        "id": 14,
+        "options": {
+          "displayMode": "basic",
+          "minVizHeight": 10,
+          "minVizWidth": 0,
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [],
+            "fields": "",
+            "values": true
+          },
+          "showUnfilled": true,
+          "text": {},
+          "valueMode": "color"
+        },
+        "pluginVersion": "9.5.1",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Drink_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'Leeds' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Drink_Sales DESC\r\nLIMIT 5;",
+            "refId": "A"
+          }
+        ],
+        "title": "Top 5 Most Sold Drinks in Leeds",
+        "type": "bargauge"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-GrYlRd"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 0,
+          "y": 9
+        },
+        "id": 15,
+        "options": {
+          "displayMode": "basic",
+          "minVizHeight": 10,
+          "minVizWidth": 0,
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [],
+            "fields": "",
+            "values": true
+          },
+          "showUnfilled": true,
+          "text": {},
+          "valueMode": "color"
+        },
+        "pluginVersion": "9.5.1",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Drink_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'London Camden' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Drink_Sales DESC\r\nLIMIT 5;",
+            "refId": "A"
+          }
+        ],
+        "title": "Top 5 Most Sold Drinks in London Camden",
+        "type": "bargauge"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-GrYlRd"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 8,
+          "y": 9
+        },
+        "id": 13,
+        "options": {
+          "displayMode": "basic",
+          "minVizHeight": 10,
+          "minVizWidth": 0,
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [],
+            "fields": "",
+            "values": true
+          },
+          "showUnfilled": true,
+          "text": {},
+          "valueMode": "color"
+        },
+        "pluginVersion": "9.5.1",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Drink_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'London Soho' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Drink_Sales DESC\r\nLIMIT 5;",
+            "refId": "A"
+          }
+        ],
+        "title": "Top 5 Most Sold Drinks in London, Soho",
+        "type": "bargauge"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-GrYlRd"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 16,
+          "y": 9
+        },
+        "id": 16,
+        "options": {
+          "displayMode": "basic",
+          "minVizHeight": 10,
+          "minVizWidth": 0,
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [],
+            "fields": "",
+            "values": true
+          },
+          "showUnfilled": true,
+          "text": {},
+          "valueMode": "color"
+        },
+        "pluginVersion": "9.5.1",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Drink_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'Uppingham' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Drink_Sales DESC\r\nLIMIT 5;",
+            "refId": "A"
+          }
+        ],
+        "title": "Top 5 Most Sold Drinks in Uppingham",
+        "type": "bargauge"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "#E02F44",
+              "mode": "thresholds"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "fillOpacity": 80,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 0
+                },
+                {
+                  "color": "#6ED0E0",
+                  "value": 10
+                },
+                {
+                  "color": "#EF843C",
+                  "value": 20
+                },
+                {
+                  "color": "#E24D42",
+                  "value": 30
+                },
+                {
+                  "color": "#1F78C1",
+                  "value": 40
+                },
+                {
+                  "color": "#BA43A9",
+                  "value": 50
+                },
+                {
+                  "color": "#705DA0",
+                  "value": 60
+                },
+                {
+                  "color": "#508642",
+                  "value": 70
+                },
+                {
+                  "color": "#CCA300",
+                  "value": 80
+                },
+                {
+                  "color": "#447EBC",
+                  "value": 90
+                },
+                {
+                  "color": "#C15C17",
+                  "value": 100
+                },
+                {
+                  "color": "#890F02",
+                  "value": 110
+                },
+                {
+                  "color": "#0A437C",
+                  "value": 120
+                },
+                {
+                  "color": "#6D1F62",
+                  "value": 130
+                },
+                {
+                  "color": "#584477",
+                  "value": 140
+                },
+                {
+                  "color": "#B7DBAB",
+                  "value": 150
+                },
+                {
+                  "color": "#F4D598",
+                  "value": 160
+                },
+                {
+                  "color": "#70DBED",
+                  "value": 170
+                },
+                {
+                  "color": "#F9BA8F",
+                  "value": 180
+                },
+                {
+                  "color": "#F29191",
+                  "value": 190
+                },
+                {
+                  "color": "#82B5D8",
+                  "value": 200
+                },
+                {
+                  "color": "#E5A8E2",
+                  "value": 210
+                },
+                {
+                  "color": "#AEA2E0",
+                  "value": 220
+                },
+                {
+                  "color": "#629E51",
+                  "value": 230
+                },
+                {
+                  "color": "#E5AC0E",
+                  "value": 240
+                },
+                {
+                  "color": "#64B0C8",
+                  "value": 250
+                },
+                {
+                  "color": "#E0752D",
+                  "value": 260
+                },
+                {
+                  "color": "#BF1B00",
+                  "value": 270
+                },
+                {
+                  "color": "#0A50A1",
+                  "value": 280
+                },
+                {
+                  "color": "#962D82",
+                  "value": 290
+                },
+                {
+                  "color": "#614D93",
+                  "value": 300
+                },
+                {
+                  "color": "#9AC48A",
+                  "value": 310
+                },
+                {
+                  "color": "#F2C96D",
+                  "value": 320
+                },
+                {
+                  "color": "#65C5DB",
+                  "value": 330
+                },
+                {
+                  "color": "#F9934E",
+                  "value": 340
+                },
+                {
+                  "color": "#EA6460",
+                  "value": 350
+                },
+                {
+                  "color": "#5195CE",
+                  "value": 360
+                },
+                {
+                  "color": "#D683CE",
+                  "value": 370
+                },
+                {
+                  "color": "#806EB7",
+                  "value": 380
+                },
+                {
+                  "color": "#3F6833",
+                  "value": 390
+                },
+                {
+                  "color": "#967302",
+                  "value": 400
+                },
+                {
+                  "color": "#2F575E",
+                  "value": 410
+                },
+                {
+                  "color": "#99440A",
+                  "value": 420
+                },
+                {
+                  "color": "#58140C",
+                  "value": 430
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "transaction_count"
+              },
+              "properties": [
+                {
+                  "id": "custom.gradientMode",
+                  "value": "scheme"
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "thresholds"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 10,
+          "w": 12,
+          "x": 0,
+          "y": 17
+        },
+        "id": 4,
+        "options": {
+          "barRadius": 0,
+          "barWidth": 0.97,
+          "fullHighlight": false,
+          "groupWidth": 0.7,
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "orientation": "auto",
+          "showValue": "auto",
+          "stacking": "none",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "xTickLabelRotation": -45,
+          "xTickLabelSpacing": 0
+        },
+        "pluginVersion": "9.5.1",
+        "targets": [
+          {
+            "column": "date_time",
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "key": "Q-c2c9a1b6-52f8-464d-bc4a-7f14c6aeeeec-0",
+            "rawSQL": "SELECT\r\n  DATE_TRUNC('hour', date_time) AS hour,\r\n  COUNT(*) AS transaction_count\r\nFROM\r\n  transactions\r\nWHERE\r\n      date_time >= '2023-05-23 09:00'\r\n  AND date_time <= '2023-05-23 18:00'\r\nGROUP BY\r\n    hour\r\nORDER BY\r\n    hour\r\n\r\n",
+            "refId": "A",
+            "schema": "public"
+          }
+        ],
+        "title": "Transactions per hour on 23/05/23",
+        "type": "barchart"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": [],
+            "unit": "percent"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 10,
+          "w": 12,
+          "x": 12,
+          "y": 17
+        },
+        "id": 1,
+        "options": {
+          "displayLabels": [
+            "percent"
+          ],
+          "legend": {
+            "displayMode": "list",
+            "placement": "right",
+            "showLegend": true,
+            "values": [
+              "percent"
+            ]
+          },
+          "pieType": "pie",
+          "reduceOptions": {
+            "calcs": [
+              "count"
+            ],
+            "fields": "",
+            "limit": 10,
+            "values": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "desc"
+          }
+        },
+        "pluginVersion": "9.5.1",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "key": "Q-c2c9a1b6-52f8-464d-bc4a-7f14c6aeeeec-0",
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as item_count FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJoin transactions as t On t.transaction_id = ti.transaction_id\r\nWhere  $__timeFilter(t.date_time) \r\nGROUP BY i.item_name ORDER BY item_count DESC;",
+            "refId": "A",
+            "schema": "public"
+          }
+        ],
+        "title": "Top 10 sold products - percentage",
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-GrYlRd"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 24,
+          "x": 0,
+          "y": 27
+        },
+        "id": 12,
+        "options": {
+          "displayMode": "basic",
+          "minVizHeight": 10,
+          "minVizWidth": 0,
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [],
+            "fields": "",
+            "values": true
+          },
+          "showUnfilled": true,
+          "valueMode": "color"
+        },
+        "pluginVersion": "9.5.1",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Drink_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE location_name != 'test' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Drink_Sales DESC, l.location_name  LIMIT 20;",
+            "refId": "A"
+          }
+        ],
+        "title": "Top 20 drinks",
+        "type": "bargauge"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "#E02F44",
+              "mode": "thresholds"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "Number of product sold",
+              "axisPlacement": "auto",
+              "fillOpacity": 78,
+              "gradientMode": "scheme",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 50
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 60
+                },
+                {
+                  "color": "#6ED0E0",
+                  "value": 70
+                },
+                {
+                  "color": "#EF843C",
+                  "value": 80
+                },
+                {
+                  "color": "#E24D42",
+                  "value": 90
+                },
+                {
+                  "color": "#1F78C1",
+                  "value": 100
+                },
+                {
+                  "color": "#BA43A9",
+                  "value": 110
+                },
+                {
+                  "color": "#705DA0",
+                  "value": 120
+                },
+                {
+                  "color": "#508642",
+                  "value": 130
+                },
+                {
+                  "color": "#CCA300",
+                  "value": 140
+                },
+                {
+                  "color": "#447EBC",
+                  "value": 150
+                },
+                {
+                  "color": "#C15C17",
+                  "value": 160
+                },
+                {
+                  "color": "#890F02",
+                  "value": 170
+                },
+                {
+                  "color": "#0A437C",
+                  "value": 180
+                },
+                {
+                  "color": "#6D1F62",
+                  "value": 190
+                },
+                {
+                  "color": "#584477",
+                  "value": 200
+                },
+                {
+                  "color": "#B7DBAB",
+                  "value": 210
+                },
+                {
+                  "color": "#F4D598",
+                  "value": 220
+                },
+                {
+                  "color": "#70DBED",
+                  "value": 230
+                },
+                {
+                  "color": "#F9BA8F",
+                  "value": 240
+                },
+                {
+                  "color": "#F29191",
+                  "value": 250
+                },
+                {
+                  "color": "#82B5D8",
+                  "value": 260
+                },
+                {
+                  "color": "#E5A8E2",
+                  "value": 270
+                },
+                {
+                  "color": "#AEA2E0",
+                  "value": 280
+                },
+                {
+                  "color": "#629E51",
+                  "value": 290
+                },
+                {
+                  "color": "#E5AC0E",
+                  "value": 300
+                },
+                {
+                  "color": "#64B0C8",
+                  "value": 310
+                },
+                {
+                  "color": "#E0752D",
+                  "value": 320
+                },
+                {
+                  "color": "#BF1B00",
+                  "value": 330
+                },
+                {
+                  "color": "#0A50A1",
+                  "value": 340
+                },
+                {
+                  "color": "#962D82",
+                  "value": 350
+                },
+                {
+                  "color": "#614D93",
+                  "value": 360
+                },
+                {
+                  "color": "#9AC48A",
+                  "value": 370
+                },
+                {
+                  "color": "#F2C96D",
+                  "value": 380
+                },
+                {
+                  "color": "#65C5DB",
+                  "value": 390
+                },
+                {
+                  "color": "#F9934E",
+                  "value": 400
+                },
+                {
+                  "color": "#EA6460",
+                  "value": 410
+                },
+                {
+                  "color": "#5195CE",
+                  "value": 420
+                },
+                {
+                  "color": "#D683CE",
+                  "value": 430
+                },
+                {
+                  "color": "#806EB7",
+                  "value": 440
+                },
+                {
+                  "color": "#3F6833",
+                  "value": 450
+                },
+                {
+                  "color": "#967302",
+                  "value": 460
+                },
+                {
+                  "color": "#2F575E",
+                  "value": 470
+                },
+                {
+                  "color": "#99440A",
+                  "value": 480
+                },
+                {
+                  "color": "#58140C",
+                  "value": 490
+                },
+                {
+                  "color": "#052B51",
+                  "value": 500
+                },
+                {
+                  "color": "#511749",
+                  "value": 510
+                },
+                {
+                  "color": "#3F2B5B",
+                  "value": 520
+                },
+                {
+                  "color": "#E0F9D7",
+                  "value": 530
+                },
+                {
+                  "color": "#FCEACA",
+                  "value": 540
+                },
+                {
+                  "color": "#CFFAFF",
+                  "value": 550
+                },
+                {
+                  "color": "#F9E2D2",
+                  "value": 560
+                },
+                {
+                  "color": "#FCE2DE",
+                  "value": 570
+                },
+                {
+                  "color": "#BADFF4",
+                  "value": 580
+                },
+                {
+                  "color": "#F9D9F9",
+                  "value": 590
+                },
+                {
+                  "color": "#DEDAF7",
+                  "value": 600
+                },
+                {
+                  "color": "#CCCCCC",
+                  "value": 610
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "item_name"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "thresholds"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 24,
+          "x": 0,
+          "y": 39
+        },
+        "id": 3,
+        "options": {
+          "barRadius": 0,
+          "barWidth": 0.97,
+          "colorByField": "item_count",
+          "fullHighlight": false,
+          "groupWidth": 0.7,
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": false
+          },
+          "orientation": "auto",
+          "showValue": "auto",
+          "stacking": "none",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "xField": "item_name",
+          "xTickLabelRotation": -30,
+          "xTickLabelSpacing": 0
+        },
+        "pluginVersion": "9.5.1",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "key": "Q-c2c9a1b6-52f8-464d-bc4a-7f14c6aeeeec-0",
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as item_count FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nGROUP BY i.item_name ORDER BY item_count DESC\r\nLIMIT 20;",
+            "refId": "A",
+            "schema": "public"
+          }
+        ],
+        "timeFrom": "1d",
+        "title": "Top 20 products - grouped by sold amounts ",
+        "type": "barchart"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "neutral": -3
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "percentage",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "orange",
+                  "value": 70
+                },
+                {
+                  "color": "red",
+                  "value": 85
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 24,
+          "x": 0,
+          "y": 48
+        },
+        "id": 6,
+        "options": {
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "sum"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "pluginVersion": "9.5.1",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "hide": false,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Large_Espresso_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'Birmingham' AND i.item_name = 'Large Espresso' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Large_Espresso_Sales DESC\r\nLIMIT 10;",
+            "refId": "Birmingham",
+            "schema": ""
+          },
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "fillMode": {
+              "mode": 2
+            },
+            "format": 1,
+            "hide": false,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Large_Espresso_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'Chesterfield' AND i.item_name = 'Large Espresso' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Large_Espresso_Sales DESC\r\nLIMIT 10;",
+            "refId": "Chesterfield"
+          },
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "hide": false,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Large_Espresso_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'Leeds' AND i.item_name = 'Large Espresso' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Large_Espresso_Sales DESC\r\nLIMIT 10;",
+            "refId": "Leeds"
+          },
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "hide": false,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Large_Espresso_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'London Brixton' AND i.item_name = 'Large Espresso' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Large_Espresso_Sales DESC\r\nLIMIT 10;",
+            "refId": "London Brixton"
+          },
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "hide": false,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Large_Espresso_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'London Camden' AND i.item_name = 'Large Espresso' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Large_Espresso_Sales DESC\r\nLIMIT 10;",
+            "refId": "London Camden",
+            "schema": ""
+          },
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "hide": false,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Large_Espresso_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'London Piccadilly' AND i.item_name = 'Large Espresso' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Large_Espresso_Sales DESC\r\nLIMIT 10;",
+            "refId": "London Piccadilly"
+          },
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Large_Espresso_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'London Soho' AND i.item_name = 'Large Espresso' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Large_Espresso_Sales DESC\r\nLIMIT 10;",
+            "refId": "London Soho"
+          },
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "hide": false,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Large_Espresso_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'Longridge' AND i.item_name = 'Large Espresso' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Large_Espresso_Sales DESC\r\nLIMIT 10;",
+            "refId": "Longridge"
+          },
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "hide": false,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Large_Espresso_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'Uppingham' AND i.item_name = 'Large Espresso' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Large_Espresso_Sales DESC\r\nLIMIT 10;",
+            "refId": "Uppingham"
+          }
+        ],
+        "title": "'Large Espresso' sales over branches",
+        "transformations": [],
+        "type": "gauge"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "neutral": -3
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "percentage",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "orange",
+                  "value": 70
+                },
+                {
+                  "color": "red",
+                  "value": 85
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 24,
+          "x": 0,
+          "y": 60
+        },
+        "hideTimeOverride": false,
+        "id": 7,
+        "maxDataPoints": 1185,
+        "options": {
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "sum"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "pluginVersion": "9.5.1",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "hide": false,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Regular_Speciality_Tea_Camomile_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'Birmingham' AND i.item_name = 'Regular Speciality Tea - Camomile' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Regular_Speciality_Tea_Camomile_Sales DESC;",
+            "refId": "Birmingham",
+            "schema": "",
+            "table": ""
+          },
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "fillMode": {
+              "mode": 2
+            },
+            "format": 1,
+            "hide": false,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Regular_Speciality_Tea_Camomile_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'Chesterfield' AND i.item_name = 'Regular Speciality Tea - Camomile' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Regular_Speciality_Tea_Camomile_Sales DESC;",
+            "refId": "Chesterfield"
+          },
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "hide": false,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Regular_Speciality_Tea_Camomile_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'Leeds' AND i.item_name = 'Regular Speciality Tea - Camomile' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Regular_Speciality_Tea_Camomile_Sales DESC;",
+            "refId": "Leeds"
+          },
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "hide": false,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Regular_Speciality_Tea_Camomile_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'London Brixton' AND i.item_name = 'Regular Speciality Tea - Camomile' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Regular_Speciality_Tea_Camomile_Sales DESC;",
+            "refId": "London Brixton"
+          },
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "hide": false,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Regular_Speciality_Tea_Camomile_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'London Camden' AND i.item_name = 'Regular Speciality Tea - Camomile' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Regular_Speciality_Tea_Camomile_Sales DESC;",
+            "refId": "London Camden",
+            "schema": ""
+          },
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "hide": false,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Regular_Speciality_Tea_Camomile_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'London Piccadilly' AND i.item_name = 'Regular Speciality Tea - Camomile' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Regular_Speciality_Tea_Camomile_Sales DESC;",
+            "refId": "London Piccadilly"
+          },
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Regular_Speciality_Tea_Camomile_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'London Soho' AND i.item_name = 'Regular Speciality Tea - Camomile' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Regular_Speciality_Tea_Camomile_Sales DESC;",
+            "refId": "London Soho"
+          },
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "hide": false,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Regular_Speciality_Tea_Camomile_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'Longridge' AND i.item_name = 'Regular Speciality Tea - Camomile' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Regular_Speciality_Tea_Camomile_Sales DESC;",
+            "refId": "Longridge"
+          },
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "hide": false,
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as Regular_Speciality_Tea_Camomile_Sales, l.location_name FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nJOIN locations as l ON l.location_id = t.location_id\r\nWHERE l.location_name = 'Uppingham' AND i.item_name = 'Regular Speciality Tea - Camomile' AND $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY Regular_Speciality_Tea_Camomile_Sales DESC;",
+            "refId": "Uppingham"
+          }
+        ],
+        "title": "'Regular Speciality Tea - Camomile' sales over branches",
+        "transformations": [],
+        "type": "gauge"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "#E02F44",
+              "mode": "thresholds"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "fillOpacity": 80,
+              "gradientMode": "scheme",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 0,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 50
+                },
+                {
+                  "color": "#1F78C1",
+                  "value": 100
+                },
+                {
+                  "color": "#6ED0E0",
+                  "value": 120
+                },
+                {
+                  "color": "#EF843C",
+                  "value": 130
+                },
+                {
+                  "color": "#a5ce5c",
+                  "value": 140
+                },
+                {
+                  "color": "#584477",
+                  "value": 150
+                },
+                {
+                  "color": "#B7DBAB",
+                  "value": 200
+                },
+                {
+                  "color": "#890F02",
+                  "value": 250
+                },
+                {
+                  "color": "#F9BA8F",
+                  "value": 300
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 350
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "item_name"
+              },
+              "properties": [
+                {
+                  "id": "custom.gradientMode",
+                  "value": "scheme"
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "thresholds"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 10,
+          "w": 12,
+          "x": 0,
+          "y": 72
+        },
+        "id": 2,
+        "options": {
+          "barRadius": 0.5,
+          "barWidth": 0.97,
+          "colorByField": "item_count",
+          "fullHighlight": false,
+          "groupWidth": 0.7,
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "right",
+            "showLegend": true
+          },
+          "orientation": "horizontal",
+          "showValue": "auto",
+          "stacking": "none",
+          "text": {},
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "xField": "item_name",
+          "xTickLabelRotation": 0,
+          "xTickLabelSpacing": 0
+        },
+        "pluginVersion": "9.5.1",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "key": "Q-c2c9a1b6-52f8-464d-bc4a-7f14c6aeeeec-0",
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as item_count FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nWHERE $__timeFilter(t.date_time) \r\nGROUP BY i.item_name ORDER BY item_count DESC\r\nLIMIT 10;",
+            "refId": "A",
+            "schema": "public"
+          }
+        ],
+        "title": "Top 10 most popular drinks",
+        "type": "barchart"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "thresholds": {
+              "mode": "percentage",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "orange",
+                  "value": 70
+                },
+                {
+                  "color": "red",
+                  "value": 85
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 72
+        },
+        "id": 8,
+        "options": {
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [],
+            "fields": "",
+            "values": true
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "pluginVersion": "9.5.1",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "rawSQL": "SELECT i.item_name, COUNT(ti.item_id) as item_count FROM items as i\r\nINNER JOIN transaction_items as ti ON ti.item_id = i.item_id\r\nJOIN transactions as t ON t.transaction_id = ti.transaction_id\r\nWHERE $__timeFilter(t.date_time) \r\nGROUP BY i.item_name ORDER BY item_count DESC;",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": "1d",
+        "title": "Today's Most Popular Products",
+        "type": "gauge"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "bars",
+              "fillOpacity": 90,
+              "gradientMode": "scheme",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "short"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 82
+        },
+        "id": 5,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.5.1",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "format": 1,
+            "rawSQL": "SELECT\r\n  DATE_TRUNC('hour', date_time) AS hour,\r\n  COUNT(*) AS transaction_count\r\nFROM\r\n  transactions\r\nGROUP BY\r\n    hour\r\nORDER BY\r\n    hour",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": "1d",
+        "title": "Transaction Count Per Hour In A Day",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-GrYlRd"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 11,
+          "w": 12,
+          "x": 0,
+          "y": 90
+        },
+        "id": 9,
+        "options": {
+          "displayMode": "basic",
+          "minVizHeight": 10,
+          "minVizWidth": 0,
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [],
+            "fields": "",
+            "values": true
+          },
+          "showUnfilled": true,
+          "valueMode": "color"
+        },
+        "pluginVersion": "9.5.1",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "bf623659-5d69-4d6a-af19-798e8d860028"
+            },
+            "rawSQL": "SELECT i.item_name, l.location_name, COUNT(ti.item_id) as item_count\r\nFROM transactions AS t\r\nJOIN transaction_items as ti ON ti.transaction_id = t.transaction_id\r\nJOIN items as i ON i.item_id = ti.item_id\r\nJOIN locations AS l ON l.location_id = t.location_id\r\nWHERE $__timeFilter(t.date_time) \r\nGROUP BY i.item_name, l.location_name ORDER BY item_count DESC\r\nLIMIT 15;",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": "1d",
+        "title": "Today's most popular products",
+        "type": "bargauge"
+      }
+    ],
+    "refresh": "",
+    "schemaVersion": 38,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "now-24h",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Cool Beans - Sales Visualisation",
+    "uid": "c6fcec5d-6912-4f31-bb2a-34d4306071f3",
+    "version": 67,
+    "weekStart": ""
+  }
